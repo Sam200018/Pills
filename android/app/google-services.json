@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "860409466297",
+    "firebase_url": "https://pills-bd823-default-rtdb.firebaseio.com",
+    "project_id": "pills-bd823",
+    "storage_bucket": "pills-bd823.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860409466297:android:53ea2185ec9b0af763fa68",
+        "android_client_info": {
+          "package_name": "com.samuelbautista.pills"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860409466297-agmv7tvdgm3h5v5k22vnd825f7m0s65m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.samuelbautista.pills",
+            "certificate_hash": "d85251babb4d8e7528337a4c05726d75ce409eb7"
+          }
+        },
+        {
+          "client_id": "860409466297-fg990bngou1nmjveknf67otj2a37a52e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCobP-WHbS2G-kziRDQhFBNrXxZB3fPhdU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "860409466297-fg990bngou1nmjveknf67otj2a37a52e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
