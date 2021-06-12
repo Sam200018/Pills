@@ -1,6 +1,19 @@
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:pills/src/BLoC/login/login_bloc.dart';
+import 'package:pills/src/screens/home_page.dart';
+
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController emailController = TextEditingController(),
+      passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,19 +47,44 @@ class LoginPage extends StatelessWidget {
                 ),
               ],
             ),
-            child: Column(
-              children: [
-                Text(
-                  'Ingreso',
-                  style: TextStyle(fontSize: 20.0),
-                ),
-                SizedBox(height: 60.0),
-                _ingresarEmail(),
-                SizedBox(height: 30.0),
-                _ingresarPassword(),
-                SizedBox(height: 30.0),
-                _ingresarBotton(),
-              ],
+            child: BlocListener<LoginBloc, LoginState>(
+              listener: (context, state) {
+                if (state is ErrorBlocState) {
+                  _showError(context, state.message);
+                }
+                if (state is LoggedInBlocState) {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (BuildContext context) => HomePage()));
+                }
+              },
+              child: BlocBuilder<LoginBloc, LoginState>(
+                builder: (context, state) {
+                  return Column(
+                    children: [
+                      Text(
+                        'Ingreso',
+                        style: TextStyle(fontSize: 20.0),
+                      ),
+                      SizedBox(height: 60.0),
+                      if (state is EmailError)
+                        _ingresarEmail(
+                            context, emailController, "email no valido")
+                      else
+                        _ingresarEmail(context, emailController, " "),
+                      SizedBox(height: 30.0),
+                      _ingresarPassword(context, passwordController),
+                      SizedBox(height: 30.0),
+                      if (state is LogginInBlocState)
+                        CircularProgressIndicator()
+                      else if (state is EmailError)
+                        _errorButton()
+                      else
+                        _ingresarButton(
+                            context, emailController, passwordController)
+                    ],
+                  );
+                },
+              ),
             ),
           )
         ],
@@ -54,10 +92,12 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _ingresarEmail() {
+  Widget _ingresarEmail(
+      BuildContext context, TextEditingController email, String message) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0),
-      child: TextField(
+      child: TextFormField(
+        controller: email,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           icon: Icon(
@@ -65,32 +105,34 @@ class LoginPage extends StatelessWidget {
             color: Colors.black,
           ),
           hintText: 'ejemplo@correo.com',
+          errorText: message,
         ),
-        // onChanged: () {},
+        onChanged: _doChange(context, email),
       ),
     );
   }
 
-  Widget _ingresarPassword() {
+  Widget _ingresarPassword(
+      BuildContext context, TextEditingController password) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: TextField(
+        controller: password,
         obscureText: true,
         decoration: InputDecoration(
           icon: Icon(
-            Icons.lock,
+            Icons.lock_open,
             color: Colors.black,
           ),
-          hintText: 'ejemplo@correo.com',
+          hintText: 'password',
         ),
-        // onChanged: () {},
       ),
     );
   }
 
-  Widget _ingresarBotton() {
+  Widget _ingresarButton(BuildContext context, TextEditingController email,
+      TextEditingController password) {
     return ElevatedButton(
-      onPressed: () {},
       child: Text('Ingresar'),
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
@@ -99,6 +141,35 @@ class LoginPage extends StatelessWidget {
         elevation: 0.0,
         primary: Colors.cyan,
       ),
+      onPressed: () => _doLogin(context, email.text, password.text),
     );
+  }
+
+  Widget _errorButton() {
+    return ElevatedButton(
+      child: Text('Ingresar'),
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        elevation: 0.0,
+        primary: Colors.cyan,
+      ),
+      onPressed: null,
+    );
+  }
+
+  void _doLogin(BuildContext context, String e, String p) {
+    BlocProvider.of<LoginBloc>(context).add(DoLoginEvent(e, p));
+  }
+
+  void _showError(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+    ));
+  }
+
+  _doChange(BuildContext context, TextEditingController email) {
+    BlocProvider.of<LoginBloc>(context).add(ChangeEmailPassword(email.text));
   }
 }
