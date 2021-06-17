@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           SafeArea(
             child: Container(
-              height: 180.0,
+              height: 130.0,
             ),
           ),
           Container(
@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Text(
                         'Ingreso',
-                        style: TextStyle(fontSize: 20.0),
+                        style: TextStyle(fontSize: 25.0),
                       ),
                       SizedBox(height: 60.0),
                       if (state is EmailError)
@@ -76,7 +76,8 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(height: 30.0),
                       if (state is LogginInBlocState)
                         CircularProgressIndicator()
-                      else if (state is EmailError)
+                      else if (state is EmailError ||
+                          passwordController.text.length == 0)
                         _errorButton()
                       else
                         _ingresarButton(
@@ -86,7 +87,12 @@ class _LoginPageState extends State<LoginPage> {
                 },
               ),
             ),
-          )
+          ),
+          TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, 'singUp');
+              },
+              child: Text('Crear una nueva cuenta'))
         ],
       ),
     );
@@ -100,10 +106,7 @@ class _LoginPageState extends State<LoginPage> {
         controller: email,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
-          icon: Icon(
-            Icons.email_outlined,
-            color: Colors.black,
-          ),
+          icon: Icon(Icons.email_outlined, color: Colors.black, size: 34.0),
           hintText: 'ejemplo@correo.com',
           errorText: message,
         ),
@@ -120,10 +123,7 @@ class _LoginPageState extends State<LoginPage> {
         controller: password,
         obscureText: true,
         decoration: InputDecoration(
-          icon: Icon(
-            Icons.lock_open,
-            color: Colors.black,
-          ),
+          icon: Icon(Icons.lock_open, color: Colors.black, size: 34.0),
           hintText: 'password',
         ),
       ),

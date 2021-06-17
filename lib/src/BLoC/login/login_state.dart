@@ -32,7 +32,6 @@ class ErrorBlocState extends LoginState {
 }
 
 class EmailError extends LoginState {
-  EmailError();
   @override
   List<Object> get props => [];
 }

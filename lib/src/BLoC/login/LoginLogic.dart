@@ -5,7 +5,7 @@ abstract class LoginLogic {
 
 class LoginExecption implements Exception {}
 
-class SimpleLoginLogic extends LoginLogic {
+class SimpleLoginLogic implements LoginLogic {
   @override
   Future<String> login(String email, String password) async {
     await Future.delayed(Duration(seconds: 2));
