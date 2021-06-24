@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:pills/src/BLoC/login/login_bloc.dart';
 import 'package:pills/src/screens/home_page.dart';
+import 'package:pills/src/utils/utilsColors.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -17,8 +18,12 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _loginForm(context),
-    );
+        body: Stack(
+      children: [
+        _background(),
+        _loginForm(context),
+      ],
+    ));
   }
 
   Widget _loginForm(BuildContext context) {
@@ -28,24 +33,14 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           SafeArea(
             child: Container(
-              height: 130.0,
+              height: 20.0,
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(vertical: 20.0),
             width: size.width * .85,
             padding: EdgeInsets.symmetric(vertical: 50.0),
             decoration: BoxDecoration(
-              color: Colors.pink.shade100,
               borderRadius: BorderRadius.circular(5.0),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 3.0,
-                  offset: Offset(0, 5.0),
-                  spreadRadius: 3.0,
-                ),
-              ],
             ),
             child: BlocListener<LoginBloc, LoginState>(
               listener: (context, state) {
@@ -61,19 +56,19 @@ class _LoginPageState extends State<LoginPage> {
                 builder: (context, state) {
                   return Column(
                     children: [
-                      Text(
-                        'Ingreso',
-                        style: TextStyle(fontSize: 25.0),
-                      ),
-                      SizedBox(height: 60.0),
+                      Image.asset('assets/LogoLogIn.png'),
+                      SizedBox(height: 30.0),
                       if (state is EmailError)
                         _ingresarEmail(
                             context, emailController, "email no valido")
                       else
-                        _ingresarEmail(context, emailController, " "),
+                        _ingresarEmail(context, emailController, null),
                       SizedBox(height: 30.0),
                       _ingresarPassword(context, passwordController),
                       SizedBox(height: 30.0),
+                      //Todo: Hacer de esto un nuevo boton
+                      Text('Olvide la contrasenia'),
+                      SizedBox(height: 60.0),
                       if (state is LogginInBlocState)
                         CircularProgressIndicator()
                       else if (state is EmailError ||
@@ -92,7 +87,10 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: () {
                 Navigator.pushNamed(context, 'singUp');
               },
-              child: Text('Crear una nueva cuenta'))
+              child: Text(
+                'Crear una nueva cuenta',
+                style: TextStyle(color: Colors.white),
+              ))
         ],
       ),
     );
@@ -103,13 +101,20 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: TextFormField(
+        textAlign: TextAlign.center,
         controller: email,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
-          icon: Icon(Icons.email_outlined, color: Colors.black, size: 34.0),
-          hintText: 'ejemplo@correo.com',
-          errorText: message,
-        ),
+            filled: true,
+            fillColor: Colors.white,
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(25.0),
+                borderSide: BorderSide(color: Colors.grey)),
+            focusColor: Colors.white,
+            hintText: 'ejemplo@correo.com',
+            hintStyle: TextStyle(color: Colors.indigo[300]),
+            errorText: message == null ? null : message,
+            errorStyle: TextStyle(color: Colors.red[900], fontSize: 20.0)),
         onChanged: _doChange(context, email),
       ),
     );
@@ -119,12 +124,18 @@ class _LoginPageState extends State<LoginPage> {
       BuildContext context, TextEditingController password) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0),
-      child: TextField(
+      child: TextFormField(
+        textAlign: TextAlign.center,
         controller: password,
         obscureText: true,
         decoration: InputDecoration(
-          icon: Icon(Icons.lock_open, color: Colors.black, size: 34.0),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(25.0),
+              borderSide: BorderSide(color: Colors.grey)),
+          filled: true,
+          fillColor: Colors.white,
           hintText: 'password',
+          hintStyle: TextStyle(color: Colors.indigo[300]),
         ),
       ),
     );
@@ -133,13 +144,14 @@ class _LoginPageState extends State<LoginPage> {
   Widget _ingresarButton(BuildContext context, TextEditingController email,
       TextEditingController password) {
     return ElevatedButton(
-      child: Text('Ingresar'),
+      child: Text('Iniciar Sesion'),
       style: ElevatedButton.styleFrom(
+        minimumSize: Size(300, 50),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5.0),
         ),
-        elevation: 0.0,
-        primary: Colors.cyan,
+        elevation: 10.0,
+        primary: buttonText(),
       ),
       onPressed: () => _doLogin(context, email.text, password.text),
     );
@@ -171,5 +183,16 @@ class _LoginPageState extends State<LoginPage> {
 
   _doChange(BuildContext context, TextEditingController email) {
     BlocProvider.of<LoginBloc>(context).add(ChangeEmailPassword(email.text));
+  }
+
+  Widget _background() {
+    return Container(
+      child: Image.asset(
+        'assets/BackgroundImage.png',
+        height: double.infinity,
+        width: double.infinity,
+        fit: BoxFit.cover,
+      ),
+    );
   }
 }

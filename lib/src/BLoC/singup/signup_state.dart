@@ -30,14 +30,14 @@ class ErrorBlocState extends SignupState {
   List<Object> get props => [m];
 }
 
-class NameError extends SignupState {
+class EmailErrorValidation extends SignupState {
   @override
   List<Object> get props => [];
 }
 
 class EmailError extends SignupState {
   @override
-  List<Object> get props => throw UnimplementedError();
+  List<Object> get props => [];
 }
 
 class PasswordError extends SignupState {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pills/src/BLoC/login/LoginLogic.dart';
 import 'package:pills/src/BLoC/login/login_bloc.dart';
+import 'package:pills/src/BLoC/singup/SignUpLogic.dart';
 import 'package:pills/src/BLoC/singup/signup_bloc.dart';
 import 'package:pills/src/screens/SignUp_Page.dart';
 import 'package:pills/src/screens/home_page.dart';
@@ -15,7 +16,8 @@ class AppState extends StatelessWidget {
     return MultiBlocProvider(providers: [
       BlocProvider<LoginBloc>(
           create: (_) => LoginBloc(logic: SimpleLoginLogic())),
-      BlocProvider<SignupBloc>(create: (_) => SignupBloc()),
+      BlocProvider<SignupBloc>(
+          create: (_) => SignupBloc(logic: SimpleSignUpLogic())),
     ], child: MyApp());
   }
 }
