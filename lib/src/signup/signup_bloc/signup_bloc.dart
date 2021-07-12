@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:pills/src/BLoC/singup/SignUpLogic.dart';
+import 'package:pills/src/signup/signup_bloc/SignUpLogic.dart';
 
 part 'signup_event.dart';
 part 'signup_state.dart';

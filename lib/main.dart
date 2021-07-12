@@ -1,42 +1,21 @@
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pills/src/BLoC/login/LoginLogic.dart';
-import 'package:pills/src/BLoC/login/login_bloc.dart';
-import 'package:pills/src/BLoC/singup/SignUpLogic.dart';
-import 'package:pills/src/BLoC/singup/signup_bloc.dart';
-import 'package:pills/src/screens/SignUp_Page.dart';
-import 'package:pills/src/screens/home_page.dart';
-import 'package:pills/src/screens/login.dart';
+import 'package:pills/app.dart';
+import 'package:pills/respository/authentication/authentication_repository.dart';
+import 'package:pills/simple_bloc_observer.dart';
 
-void main() => runApp(AppState());
-
-class AppState extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(providers: [
-      BlocProvider<LoginBloc>(
-          create: (_) => LoginBloc(logic: SimpleLoginLogic())),
-      BlocProvider<SignupBloc>(
-          create: (_) => SignupBloc(logic: SimpleSignUpLogic())),
-    ], child: MyApp());
-  }
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Pills',
-      initialRoute: 'login',
-      routes: {
-        'login': (BuildContext context) => LoginPage(),
-        'home': (BuildContext context) => HomePage(),
-        'singUp': (BuildContext context) => SignUp()
-      },
-      theme: ThemeData(
-        primaryColor: Colors.blue.shade300,
-      ),
-    );
-  }
+main() async {
+  WidgetsFlutterBinding
+      .ensureInitialized(); //*para  interactuar con el motor de Flutter
+  await Firebase.initializeApp(); //*llamar al condigo nativo de plataforma
+  EquatableConfig.stringify = kDebugMode;
+  Bloc.observer = SimpleBlocObserver();
+  final authenticationRepository = AuthenticationRepository();
+  await authenticationRepository.user.first;
+  runApp(App(
+    authenticationRepository: authenticationRepository,
+  ));
 }
