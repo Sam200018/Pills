@@ -3,49 +3,96 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
-
-import 'package:pills/src/signup/signup_bloc/SignUpLogic.dart';
+import 'package:pills/respository/authentication/authentication_repository.dart';
+import 'package:pills/src/utils/validatos.dart';
+import 'package:rxdart/rxdart.dart';
 
 part 'signup_event.dart';
 part 'signup_state.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
-  final SimpleSignUpLogic logic;
+  AuthenticationRepository _userRepository;
 
-  SignupBloc({
-    @required this.logic,
-  }) : super(SignupInitial());
+  SignupBloc({@required AuthenticationRepository userRepository})
+      : assert(userRepository != null),
+        _userRepository = userRepository,
+        super(SignupState.empty());
+
+  @override
+  Stream<Transition<SignupEvent, SignupState>> transformEvents(
+      Stream<SignupEvent> events, transitionFn) {
+    final nonDebounceStream = events.where((event) => (event is! NameChanged &&
+        event is! LastNameChanged &&
+        event is! ChangedEmail &&
+        event is! ChangedPassword));
+
+    final debounceStream = events
+        .where((event) => (event is NameChanged ||
+            event is LastNameChanged ||
+            event is ChangedEmail ||
+            event is ChangedPassword))
+        .debounceTime(Duration(milliseconds: 300));
+
+    return super.transformEvents(
+        nonDebounceStream.mergeWith([debounceStream]), transitionFn);
+  }
 
   @override
   Stream<SignupState> mapEventToState(
     SignupEvent event,
   ) async* {
-    if (event is ChangeEmail) {
-      Pattern pattern =
-          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-      RegExp regExp = RegExp(pattern);
-      if (regExp.hasMatch(event.email)) {
-        yield SignupInitial();
-      } else {
-        yield EmailError();
-      }
-    } else if (event is DoCreateRegister) {
-      yield SigningUpBLocState();
-      try {
-        var idToken = await logic.signUp(
-            event.name, event.lastName, event.email, event.password);
-        yield SignedUpBlocState(idToken);
-      } on SignUpException {
-        yield ErrorBlocState("Error: el usuario ya existe");
-      }
-    } else if (event is ChangePassword) {
-      Pattern pattern = r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$';
-      RegExp regExp = RegExp(pattern);
-      if (regExp.hasMatch(event.password)) {
-        yield SignupInitial();
-      } else {
-        yield PasswordError();
-      }
+    if (event is NameChanged) {
+      yield* _mapNameChangedToState(event.name);
+    }
+    if (event is LastNameChanged) {
+      yield* _mapLastNameChangedToState(event.lastName);
+    }
+    if (event is ChangedEmail) {
+      yield* _mapChangedEmailToState(event.emailRegister);
+    }
+    if (event is ChangedPassword) {
+      yield* _mapChangedPasswordToStae(event.passwordRegister);
+    }
+    if (event is SubmittingForm) {
+      yield* _mapSubmitingFormToState(
+          name: event.name,
+          lastName: event.lastName,
+          email: event.emailRegister,
+          password: event.passwordRegister);
+    }
+  }
+
+  Stream<SignupState> _mapNameChangedToState(String name) async* {
+    yield state.update(isNameValid: Validators.isValidNames(name));
+  }
+
+  Stream<SignupState> _mapLastNameChangedToState(String lastName) async* {
+    yield state.update(isLastNameValid: Validators.isValidNames(lastName));
+  }
+
+  Stream<SignupState> _mapChangedEmailToState(String emailRegister) async* {
+    yield state.update(isEmailVal: Validators.isValidadEmail(emailRegister));
+  }
+
+  Stream<SignupState> _mapChangedPasswordToStae(
+      String passwordRegister) async* {
+    yield state.update(
+        isPassValid: Validators.isValidPassword(passwordRegister));
+  }
+
+  Stream<SignupState> _mapSubmitingFormToState(
+      {String name, String lastName, String email, String password}) async* {
+    try {
+      await _userRepository.singUpWithEmailAndPassword(
+        name: name,
+        lastName: lastName,
+        email: email,
+        password: password,
+      );
+      yield SignupState.success();
+    } catch (e) {
+      print(e);
+      yield SignupState.failure();
     }
   }
 }

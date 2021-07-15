@@ -23,14 +23,7 @@ class _LoginFormState extends State<LoginForm> {
 
   LoginBloc _loginBloc;
 
-  //* No se para que era pero por cualquier cosa
-  // AuthenticationRepository get _userRepository => widget._userRepository;
-
-  bool get isPopulated =>
-      _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
-
-  bool isLoginButtonEnable(LoginState state) =>
-      state.isFormValid && isPopulated && !state.isSubmitting;
+  AuthenticationRepository get _userRepository => widget._userRepository;
 
   @override
   void initState() {
@@ -64,14 +57,15 @@ class _LoginFormState extends State<LoginForm> {
             ..hideCurrentSnackBar()
             ..showSnackBar(
               const SnackBar(
-                  backgroundColor: Colors.red,
-                  content: Text(
-                    'Login fallido',
-                    style: TextStyle(color: Colors.black),
-                  )),
+                backgroundColor: Colors.red,
+                content: Text(
+                  'Login fallido',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
             );
         }
-        if (state.isEmailValid) {
+        if (state.isSubmitting) {
           ScaffoldMessenger(
             child: Container(
               child: Row(
@@ -80,9 +74,6 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
           );
-        }
-        if (state.isSuccess) {
-          // BlocProvider.of<AuthBloc>(context).add(AuthenticationUserChanged());
         }
       },
       child: Align(
@@ -102,7 +93,9 @@ class _LoginFormState extends State<LoginForm> {
               SizedBox(height: 16.0),
               _LoginWithGoogleButton(),
               SizedBox(height: 40.0),
-              _SignUpButton()
+              _SignUpButton(
+                userRepository: _userRepository,
+              )
             ],
           ),
         ),
@@ -160,6 +153,11 @@ class _PasswordInput extends StatelessWidget {
 class _LoginButton extends StatelessWidget {
   final TextEditingController password, email;
 
+  bool get isPopulated => email.text.isNotEmpty && password.text.isNotEmpty;
+
+  bool isLoginButtonEnable(LoginState state) =>
+      state.isFormValid && isPopulated && !state.isSubmitting;
+
   const _LoginButton({this.password, this.email});
   @override
   Widget build(BuildContext context) {
@@ -168,7 +166,7 @@ class _LoginButton extends StatelessWidget {
         return state.isSubmitting
             ? CircularProgressIndicator()
             : ElevatedButton(
-                onPressed: state.isFormValid
+                onPressed: isLoginButtonEnable(state)
                     ? () => BlocProvider.of<LoginBloc>(context).add(
                         LoginWithCredentialsPressed(
                             email: email.text, password: password.text))
@@ -197,10 +195,16 @@ class _LoginWithGoogleButton extends StatelessWidget {
 }
 
 class _SignUpButton extends StatelessWidget {
+  final AuthenticationRepository userRepository;
+
+  const _SignUpButton({Key key, this.userRepository}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: () => Navigator.of(context).push<void>(SignUpPage.route()),
+        onPressed: () => Navigator.of(context).push<void>(MaterialPageRoute(
+            builder: (context) => SignUpPage(
+                  userRepository: userRepository,
+                ))),
         child: Text('Crear cuenta'));
   }
 }

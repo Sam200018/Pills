@@ -2,29 +2,54 @@ part of 'signup_bloc.dart';
 
 abstract class SignupEvent extends Equatable {
   const SignupEvent();
+  @override
+  List<Object> get props => [];
 }
 
-class DoCreateRegister extends SignupEvent {
-  final String name, lastName, email, password;
+class NameChanged extends SignupEvent {
+  final String name;
 
-  DoCreateRegister(this.name, this.lastName, this.email, this.password);
+  NameChanged({@required this.name});
+
   @override
-  List<Object> get props => [name, lastName, email, password];
+  List<Object> get props => [name];
 }
 
-class ChangeEmail extends SignupEvent {
-  final String email;
+class LastNameChanged extends SignupEvent {
+  final String lastName;
 
-  ChangeEmail(this.email);
+  LastNameChanged({@required this.lastName});
+
   @override
-  List<Object> get props => [email];
+  List<Object> get props => [lastName];
 }
 
-class ChangePassword extends SignupEvent {
-  final String password;
+class ChangedEmail extends SignupEvent {
+  final String emailRegister;
 
-  ChangePassword(this.password);
+  ChangedEmail({@required this.emailRegister});
 
   @override
-  List<Object> get props => [password];
+  List<Object> get props => [emailRegister];
+}
+
+class ChangedPassword extends SignupEvent {
+  final String passwordRegister;
+
+  ChangedPassword({@required this.passwordRegister});
+
+  @override
+  List<Object> get props => [passwordRegister];
+}
+
+class SubmittingForm extends SignupEvent {
+  final String name, lastName, emailRegister, passwordRegister;
+
+  SubmittingForm(
+      {@required this.name,
+      @required this.lastName,
+      @required this.emailRegister,
+      @required this.passwordRegister});
+  @override
+  List<Object> get props => [name, lastName, emailRegister, passwordRegister];
 }
