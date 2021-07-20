@@ -6,9 +6,15 @@ import 'package:meta/meta.dart';
 
 import 'models/user.dart';
 
-class SignUpFailure implements Exception {}
+class SignUpFailure implements Exception {
+  final String message;
+
+  SignUpFailure({@required this.message});
+}
 
 class LogInWithEmailAndPasswordFailure implements Exception {}
+
+class CredentialssFialure implements Exception {}
 
 class LogInWithGoogleFailure implements Exception {}
 
@@ -50,9 +56,12 @@ class AuthenticationRepository {
         'name': name,
         'lastName': lastName,
         'email': email,
+        'isInTheHose': false
       });
-    } on Exception {
-      throw SignUpFailure();
+    } on firebase_auth.FirebaseAuthException catch (e) {
+      e.code.contains('email-already-in-use')
+          ? throw SignUpFailure(message: e.toString())
+          : throw SignUpFailure(message: e.toString());
     }
   }
 
@@ -65,13 +74,33 @@ class AuthenticationRepository {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      await _firestore.collection('users').add({
-        'name': googleUser.displayName,
-        'lastName': googleUser.displayName.split(' ').last,
-        'id': googleUser.id,
-        'email': googleUser.email,
-      });
-      await _firebaseAuth.signInWithCredential(credential);
+      final user = await _firebaseAuth.signInWithCredential(credential);
+
+      await _firestore
+          .collection('users')
+          .doc(user.user.uid)
+          .get()
+          .then((value) => {
+                if (!value.exists)
+                  {
+                    _firestore.collection('users').doc(user.user.uid).set({
+                      'name': googleUser.displayName,
+                      'lastName': googleUser.displayName.split(' ').last,
+                      'email': googleUser.email,
+                      'isInTheHouse': false,
+                    })
+                  }
+              });
+
+      // await _firestore.collection('users').doc(googleUser.id).set(
+      // {
+      //   'name': googleUser.displayName,
+      //   'lastName': googleUser.displayName.split(' ').last,
+      //   'email': googleUser.email,
+      //   'isInTheHouse': false,
+      // }
+      // );
+
     } on Exception {
       throw LogInWithGoogleFailure();
     }
@@ -85,8 +114,8 @@ class AuthenticationRepository {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
       // await;
-    } on Exception {
-      throw LogInWithEmailAndPasswordFailure();
+    } on firebase_auth.FirebaseAuthException catch (e) {
+      throw e;
     }
   }
 

@@ -21,8 +21,10 @@ class SignUpPage extends StatelessWidget {
     return Scaffold(
       body: BlocProvider<SignupBloc>(
         create: (context) => SignupBloc(userRepository: _userRepository),
-        child: SignupForm(
-          userRepository: _userRepository,
+        child: SafeArea(
+          child: SignupForm(
+            userRepository: _userRepository,
+          ),
         ),
       ),
     );

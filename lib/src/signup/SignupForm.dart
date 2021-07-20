@@ -72,7 +72,7 @@ class _SignupFormState extends State<SignupForm> {
               const SnackBar(
                 backgroundColor: Colors.red,
                 content: Text(
-                  'Registro fallido',
+                  'La cuenta ya existe',
                   style: TextStyle(color: Colors.black),
                 ),
               ),

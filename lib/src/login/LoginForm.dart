@@ -52,28 +52,31 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
-        if (state.isFailure) {
+        if (state.isFailurePasword) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
               const SnackBar(
                 backgroundColor: Colors.red,
                 content: Text(
-                  'Login fallido',
+                  'las credenciales no son correctas',
                   style: TextStyle(color: Colors.black),
                 ),
               ),
             );
         }
-        if (state.isSubmitting) {
-          ScaffoldMessenger(
-            child: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Text('Cargando'), CircularProgressIndicator()],
+        if (state.isFailureUser) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              const SnackBar(
+                backgroundColor: Colors.red,
+                content: Text(
+                  'El usuario no existe',
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
-            ),
-          );
+            );
         }
       },
       child: Align(

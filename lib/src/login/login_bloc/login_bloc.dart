@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 import 'package:pills/src/utils/validatos.dart';
 import 'package:rxdart/rxdart.dart';
@@ -63,7 +64,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       await _userRepository.loginWithGoogle();
       yield LoginState.success();
     } catch (e) {
-      yield LoginState.failure();
+      yield LoginState.failureCredential();
     }
   }
 
@@ -74,8 +75,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       await _userRepository.loginWithEmailAndPassword(
           email: email, password: password);
       yield LoginState.success();
-    } catch (e) {
-      yield LoginState.failure();
+    } on FirebaseAuthException catch (e) {
+      if (e.message.contains('The user may have been deleted'))
+        yield LoginState.failureUser();
+      if (e.message.contains(
+          'The password is invalid or the user does not have a password.'))
+        yield LoginState.failureCredential();
     }
   }
 }
