@@ -56,7 +56,8 @@ class AuthenticationRepository {
         'name': name,
         'lastName': lastName,
         'email': email,
-        'isInTheHose': false
+        'isInTheHouse': false,
+        'house': null
       });
     } on firebase_auth.FirebaseAuthException catch (e) {
       e.code.contains('email-already-in-use')
@@ -88,19 +89,10 @@ class AuthenticationRepository {
                       'lastName': googleUser.displayName.split(' ').last,
                       'email': googleUser.email,
                       'isInTheHouse': false,
+                      'house': null,
                     })
                   }
               });
-
-      // await _firestore.collection('users').doc(googleUser.id).set(
-      // {
-      //   'name': googleUser.displayName,
-      //   'lastName': googleUser.displayName.split(' ').last,
-      //   'email': googleUser.email,
-      //   'isInTheHouse': false,
-      // }
-      // );
-
     } on Exception {
       throw LogInWithGoogleFailure();
     }
@@ -130,10 +122,28 @@ class AuthenticationRepository {
       throw LogOutFailure();
     }
   }
+
+  Future<bool> getIsInTheHouse() async {
+    final user = _firebaseAuth.currentUser;
+
+    final cloud_firestore.DocumentSnapshot docReference =
+        await _firestore.collection('users').doc(user.uid).get();
+    Map<String, dynamic> data = docReference.data() as Map<String, dynamic>;
+
+    User userBool = User.fromMap(data);
+
+    return userBool.isInTheHouse;
+  }
 }
 
 extension on firebase_auth.User {
   User get toUser {
-    return User(id: uid, email: email, name: displayName, lastName: photoURL);
+    return User(
+        id: uid,
+        email: email,
+        name: displayName,
+        lastName: null,
+        house: null,
+        isInTheHouse: false);
   }
 }

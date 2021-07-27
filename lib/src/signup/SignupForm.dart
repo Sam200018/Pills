@@ -86,6 +86,17 @@ class _SignupFormState extends State<SignupForm> {
                         userRepository: _userRepository,
                       )),
               (route) => false);
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              const SnackBar(
+                backgroundColor: Colors.red,
+                content: Text(
+                  'Usuario registrado exitosamente!',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            );
         }
       },
       child: Align(

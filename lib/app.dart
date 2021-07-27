@@ -5,6 +5,7 @@ import 'package:pills/src/BLoC/auth/auth_bloc.dart';
 import 'package:pills/src/home/home_page.dart';
 import 'package:pills/src/login/login_page.dart';
 import 'package:pills/src/screens/splash_page.dart';
+import 'package:pills/src/signup/SignUp_Page.dart';
 import 'package:pills/theme.dart';
 
 class App extends StatelessWidget {
@@ -39,36 +40,39 @@ class AppView extends StatefulWidget {
 
 class _AppViewState extends State<AppView> {
   final _navigatorKey = GlobalKey<NavigatorState>();
-  NavigatorState get _navigator => _navigatorKey.currentState;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: theme,
-        navigatorKey: _navigatorKey,
-        builder: (context, child) {
-          return BlocListener<AuthBloc, AuthenticationState>(
-            listener: (context, state) {
+      title: 'Pills',
+      debugShowCheckedModeBanner: false,
+      theme: theme,
+      navigatorKey: _navigatorKey,
+      initialRoute: '/',
+      routes: {
+        '/': (context) {
+          return BlocBuilder<AuthBloc, AuthenticationState>(
+            builder: (context, state) {
               switch (state.status) {
                 case AuthenticationStatus.authenticated:
-                  _navigator.pushAndRemoveUntil<void>(
-                      HomePage.route(), (route) => false);
+                  return HomePage(
+                      userRepository: widget.authenticationRepository);
                   break;
                 case AuthenticationStatus.unauthenticated:
-                  _navigator.pushAndRemoveUntil(
-                      MaterialPageRoute(
-                          builder: (context) => LoginPage(
-                              userRepository: widget.authenticationRepository)),
-                      (route) => false);
+                  return LoginPage(
+                      userRepository: widget.authenticationRepository);
                   break;
                 default:
+                  return SplashScreen();
                   break;
               }
             },
-            child: child,
           );
         },
-        onGenerateRoute: (_) => SplashScreen.route());
+        'signup': (context) {
+          return SignUpPage(userRepository: widget.authenticationRepository);
+        }
+      },
+    );
   }
 }

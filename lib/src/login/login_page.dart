@@ -22,9 +22,7 @@ class LoginPage extends StatelessWidget {
       body: BlocProvider<LoginBloc>(
         create: (context) => LoginBloc(userRepository: _userRepository),
         child: SafeArea(
-          child: LoginForm(
-            userRepository: _userRepository,
-          ),
+          child: LoginForm(),
         ),
       ),
     );

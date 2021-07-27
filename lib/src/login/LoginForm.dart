@@ -1,18 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pills/respository/authentication/authentication_repository.dart';
 
 import 'package:pills/src/login/login_bloc/login_bloc.dart';
-import 'package:pills/src/signup/SignUp_Page.dart';
 
 class LoginForm extends StatefulWidget {
-  final AuthenticationRepository _userRepository;
-
-  const LoginForm({Key key, AuthenticationRepository userRepository})
-      : assert(userRepository != null),
-        _userRepository = userRepository,
-        super(key: key);
-
   @override
   _LoginFormState createState() => _LoginFormState();
 }
@@ -22,8 +13,6 @@ class _LoginFormState extends State<LoginForm> {
       _passwordController = TextEditingController();
 
   LoginBloc _loginBloc;
-
-  AuthenticationRepository get _userRepository => widget._userRepository;
 
   @override
   void initState() {
@@ -59,7 +48,7 @@ class _LoginFormState extends State<LoginForm> {
               const SnackBar(
                 backgroundColor: Colors.red,
                 content: Text(
-                  'las credenciales no son correctas',
+                  'Las credenciales no son correctas',
                   style: TextStyle(color: Colors.black),
                 ),
               ),
@@ -96,9 +85,7 @@ class _LoginFormState extends State<LoginForm> {
               SizedBox(height: 16.0),
               _LoginWithGoogleButton(),
               SizedBox(height: 40.0),
-              _SignUpButton(
-                userRepository: _userRepository,
-              )
+              _SignUpButton()
             ],
           ),
         ),
@@ -198,16 +185,10 @@ class _LoginWithGoogleButton extends StatelessWidget {
 }
 
 class _SignUpButton extends StatelessWidget {
-  final AuthenticationRepository userRepository;
-
-  const _SignUpButton({Key key, this.userRepository}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: () => Navigator.of(context).push<void>(MaterialPageRoute(
-            builder: (context) => SignUpPage(
-                  userRepository: userRepository,
-                ))),
+        onPressed: () => Navigator.of(context).pushNamed('signup'),
         child: Text('Crear cuenta'));
   }
 }
