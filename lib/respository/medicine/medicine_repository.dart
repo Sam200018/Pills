@@ -14,7 +14,13 @@ class MedicineFirebase {
     try {
       final house = await _firestore.collection('houses').add({
         'members': [user.uid],
-        'drugs': {}
+      }).then((value) {
+        print(value.id);
+        _firestore
+            .collection('houses')
+            .doc(value.id)
+            .collection('drugs')
+            .add(null);
       });
 
       await _firestore
