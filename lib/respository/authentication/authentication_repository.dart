@@ -123,16 +123,10 @@ class AuthenticationRepository {
     }
   }
 
-  Future<bool> getIsInTheHouse() async {
+  Stream<cloud_firestore.DocumentSnapshot> getIsInTheHouse() {
     final user = _firebaseAuth.currentUser;
 
-    final cloud_firestore.DocumentSnapshot docReference =
-        await _firestore.collection('users').doc(user.uid).get();
-    Map<String, dynamic> data = docReference.data() as Map<String, dynamic>;
-
-    User userBool = User.fromMap(data);
-
-    return userBool.isInTheHouse;
+    return _firestore.collection('users').doc(user.uid).snapshots();
   }
 }
 

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pills/respository/authentication/authentication_repository.dart';
-import 'package:pills/src/BLoC/auth/auth_bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class HomePage extends StatelessWidget {
+import 'package:pills/respository/authentication/authentication_repository.dart';
+import 'package:pills/src/house/house_page.dart';
+import 'package:pills/src/medicine/MedicinePage.dart';
+
+class HomePage extends StatefulWidget {
   final AuthenticationRepository _userRepository;
 
   const HomePage({Key key, AuthenticationRepository userRepository})
@@ -16,41 +18,25 @@ class HomePage extends StatelessWidget {
   }
 
   @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      endDrawer: Drawer(
-          child: ListView(
-        children: [
-          ListTile(
-            title: Text('Cerrar Sesion'),
-            onTap: () => BlocProvider.of<AuthBloc>(context)
-                .add(AuthenticationLogoutRequested()),
-          )
-        ],
-      )),
-      appBar: AppBar(
-        //*aca va el logo de la app
-        leading: Icon(Icons.pageview),
-        elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        // *Colocar aca una caja de input para buscar los medicamentos
-        title: Text(
-          'Buscar',
-          style: TextStyle(color: Colors.grey),
-        ),
-      ),
-      body: FutureBuilder(
-          future: _userRepository.getIsInTheHouse(),
-          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-            if (snapshot.connectionState == ConnectionState.done &&
-                snapshot.data) {
-              return Text(snapshot.data.toString());
-            } else {
-              return Text('No data');
-            }
-          }),
+    return StreamBuilder<DocumentSnapshot>(
+      stream: widget._userRepository.getIsInTheHouse(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+        if (snapshot.data.get('isInTheHouse')) {
+          return MedicinePage();
+        } else {
+          return HousePage();
+        }
+      },
     );
   }
 }
