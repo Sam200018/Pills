@@ -89,6 +89,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
         email: email,
         password: password,
       );
+      yield SignupState.loading();
       yield SignupState.success();
     } catch (e) {
       print(e);

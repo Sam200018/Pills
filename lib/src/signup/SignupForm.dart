@@ -90,7 +90,7 @@ class _SignupFormState extends State<SignupForm> {
             ..hideCurrentSnackBar()
             ..showSnackBar(
               const SnackBar(
-                backgroundColor: Colors.red,
+                backgroundColor: Colors.green,
                 content: Text(
                   'Usuario registrado exitosamente!',
                   style: TextStyle(color: Colors.black),
@@ -250,17 +250,20 @@ class _SignUpWithCredentialsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SignupBloc, SignupState>(
       builder: (context, state) {
-        return ElevatedButton(
-            onPressed: isSignupButtonEnable(state)
-                ? () {
-                    BlocProvider.of<SignupBloc>(context).add(SubmittingForm(
-                        name: name.text,
-                        lastName: lastName.text,
-                        emailRegister: email.text,
-                        passwordRegister: password.text));
-                  }
-                : null,
-            child: Text('Crear Cuenta'));
+        return (state.isSubmitting)
+            ? CircularProgressIndicator()
+            : ElevatedButton(
+                onPressed: isSignupButtonEnable(state)
+                    ? () {
+                        BlocProvider.of<SignupBloc>(context).add(SubmittingForm(
+                            name: name.text,
+                            lastName: lastName.text,
+                            emailRegister: email.text,
+                            passwordRegister: password.text));
+                      }
+                    : null,
+                child: Text('Crear Cuenta'),
+              );
       },
     );
   }

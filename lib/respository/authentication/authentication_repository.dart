@@ -85,7 +85,7 @@ class AuthenticationRepository {
                 if (!value.exists)
                   {
                     _firestore.collection('users').doc(user.user.uid).set({
-                      'name': googleUser.displayName,
+                      'name': googleUser.displayName.split(' ').first,
                       'lastName': googleUser.displayName.split(' ').last,
                       'email': googleUser.email,
                       'isInTheHouse': false,

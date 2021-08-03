@@ -28,8 +28,9 @@ class _HomePageState extends State<HomePage> {
       stream: widget._userRepository.getIsInTheHouse(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+        if (snapshot.connectionState == ConnectionState.waiting ||
+            !snapshot.hasData) {
+          return Center(child: CircularProgressIndicator());
         }
         if (snapshot.data.get('isInTheHouse')) {
           return MedicinePage();
