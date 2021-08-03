@@ -251,7 +251,7 @@ class _SignUpWithCredentialsButton extends StatelessWidget {
     return BlocBuilder<SignupBloc, SignupState>(
       builder: (context, state) {
         return (state.isSubmitting)
-            ? CircularProgressIndicator()
+            ? Center(child: CircularProgressIndicator())
             : ElevatedButton(
                 onPressed: isSignupButtonEnable(state)
                     ? () {

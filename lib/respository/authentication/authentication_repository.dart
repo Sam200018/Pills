@@ -64,6 +64,7 @@ class AuthenticationRepository {
           ? throw SignUpFailure(message: e.toString())
           : throw SignUpFailure(message: e.toString());
     }
+    logOut();
   }
 
   //*Login con google

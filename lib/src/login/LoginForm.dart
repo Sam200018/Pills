@@ -154,7 +154,7 @@ class _LoginButton extends StatelessWidget {
     return BlocBuilder<LoginBloc, LoginState>(
       builder: (context, state) {
         return state.isSubmitting
-            ? CircularProgressIndicator()
+            ? Center(child: CircularProgressIndicator())
             : ElevatedButton(
                 onPressed: isLoginButtonEnable(state)
                     ? () => BlocProvider.of<LoginBloc>(context).add(
