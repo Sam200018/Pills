@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:pills/respository/authentication/authentication_repository.dart';
 import 'package:pills/src/BLoC/auth/auth_bloc.dart';
+import 'package:pills/src/addMedicine/addMedicinesPage.dart';
 import 'package:pills/src/home/home_page.dart';
 import 'package:pills/src/login/login_page.dart';
 import 'package:pills/src/screens/splash_page.dart';
@@ -69,9 +71,9 @@ class _AppViewState extends State<AppView> {
             },
           );
         },
-        'signup': (context) {
-          return SignUpPage(userRepository: widget.authenticationRepository);
-        }
+        'signup': (context) =>
+            SignUpPage(userRepository: widget.authenticationRepository),
+        '/addMedicine': (context) => AddMedicinePage()
       },
     );
   }
