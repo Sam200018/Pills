@@ -1,45 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:pills/respository/medicine/model/medicine.dart';
 
 import 'package:pills/src/utils/utilsColors.dart';
 
 class MedicineCard extends StatelessWidget {
-  final String name;
-  final DateTime fechaDeCaducidad;
-  final double disponible;
+  final Medicine _medicine;
 
-  const MedicineCard(
-      {Key key,
-      @required this.name,
-      @required this.fechaDeCaducidad,
-      @required this.disponible})
-      : super(key: key);
+  const MedicineCard({Key key, Medicine medicine})
+      : _medicine = medicine,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 20),
-        width: double.infinity,
-        height: 100,
-        color: bottonGray(),
-        child: Row(
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 20),
+      width: double.infinity,
+      height: 100,
+      color: bottonGray(),
+      child: ListTile(
+        title: Text(_medicine.name),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              color: Colors.green,
-              width: 40,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Nombre: $name'),
-                Text('$fechaDeCaducidad'),
-                Text('Disponible: $disponible')
-              ],
-            )
+            Text('Fecha de caducidad: ${_medicine.fechaDeCaducidad}'),
+            Text('Cantidad disponible: ${_medicine.cantidad}'),
           ],
         ),
+        onTap: () => print('${_medicine.name}'),
       ),
     );
   }

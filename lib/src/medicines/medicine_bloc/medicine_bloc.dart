@@ -35,9 +35,13 @@ class MedicineBloc extends Bloc<MedicineEvent, MedicineState> {
 
   Stream<MedicineState> _mapLoadMedicinesToState() async* {
     _medicinesSubscription?.cancel();
-    _medicinesSubscription = _medicinesRepository
-        .medicines()
-        .listen((medicines) => add(MedicinesUpdated(medicines)));
+    try {
+      _medicinesSubscription = _medicinesRepository
+          .medicines()
+          .listen((medicines) => add(MedicinesUpdated(medicines)));
+    } catch (e) {
+      yield MedicinesNotLoaded();
+    }
   }
 
   Stream<MedicineState> _mapAddMedicineToState(AddMedicine event) async* {

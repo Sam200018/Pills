@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pills/respository/medicine/model/medicine.dart';
 
 import 'package:pills/src/medicines/medicine_bloc/medicine_bloc.dart';
 import 'package:pills/src/utils/MedicineCard.dart';
@@ -25,18 +26,26 @@ class _MedicinesState extends State<Medicines> {
           );
         }
         if (state is MedicinesLoaded) {
+          List<Medicine> medicines = state.medicines;
           return Expanded(
             child: ListView.builder(
-              itemCount: state.medicines.length,
+              itemCount: medicines.length,
               itemBuilder: (context, int index) => Dismissible(
                 key: UniqueKey(),
-                background: Container(color: Colors.red),
-                secondaryBackground: Container(color: Colors.blue),
+                background: Container(
+                  color: Colors.red,
+                  margin: EdgeInsets.symmetric(vertical: 20),
+                  child: Icon(
+                    Icons.delete_forever,
+                    size: 40.0,
+                  ),
+                ),
+                onDismissed: (DismissDirection direction) {
+                  BlocProvider.of<MedicineBloc>(context)
+                      .add(DeleteMedicine(medicines[index]));
+                },
                 child: MedicineCard(
-                  name: state.medicines.elementAt(index).name,
-                  fechaDeCaducidad:
-                      state.medicines.elementAt(index).fechaDeCaducidad,
-                  disponible: state.medicines.elementAt(index).disponible,
+                  medicine: medicines[index],
                 ),
               ),
             ),

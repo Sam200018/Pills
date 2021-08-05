@@ -51,10 +51,10 @@ class MedicineFirebase {
         .add(medicine.toMap());
   }
 
-  Future<void> deleteMedicine(Medicine medicine) {
-    String userHouse;
-    _firestore.collection('users').doc(user.uid).get().then((value) {
-      userHouse = value.get('house');
+  Future<void> deleteMedicine(Medicine medicine) async {
+    String userHouse =
+        await _firestore.collection('users').doc(user.uid).get().then((value) {
+      return value.get('house');
     });
 
     return _firestore

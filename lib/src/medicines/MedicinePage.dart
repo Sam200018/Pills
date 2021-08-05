@@ -21,22 +21,25 @@ class MedicinePage extends StatelessWidget {
           color: Colors.black,
         ),
       ),
-      body: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-            width: double.infinity,
-            decoration: BoxDecoration(
-                border: Border(
-              bottom: BorderSide(color: buttonText()),
-            )),
-            child: Text(
-              'MEDICAMENTOS',
-              style: TextStyle(color: buttonText(), fontSize: 25.0),
+      body: Container(
+        margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+        width: double.infinity,
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  border: Border(
+                bottom: BorderSide(color: buttonText()),
+              )),
+              child: Text(
+                'MEDICAMENTOS',
+                style: TextStyle(color: buttonText(), fontSize: 25.0),
+              ),
             ),
-          ),
-          Medicines()
-        ],
+            Medicines()
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
