@@ -12,9 +12,6 @@ class MedicinePage extends StatelessWidget {
         child: ListSide(),
       ),
       appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.white,
-        actionsIconTheme: IconThemeData(color: buttonDeepGray()),
         //*Aca va el logo de la app
         leading: Icon(
           Icons.add_to_home_screen_sharp,

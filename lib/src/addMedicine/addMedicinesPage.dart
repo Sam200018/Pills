@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-class AddMedicinePage extends StatefulWidget {
-  @override
-  _AddMedicinePageState createState() => _AddMedicinePageState();
-}
+import 'package:pills/src/addMedicine/AddMedicineForm_Page.dart';
 
-class _AddMedicinePageState extends State<AddMedicinePage> {
+class AddMedicinePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Text("Aca podremos editar los medicamentos"),
+      appBar: AppBar(
+        title: Text(
+          'Nuevo Medicamento',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
+      body: MedicineForm(),
     );
   }
 }
