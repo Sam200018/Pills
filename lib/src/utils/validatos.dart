@@ -16,4 +16,7 @@ class Validators {
   }
 
   static isValidNames(String name) => _namesRegExp.hasMatch(name);
+
+  static isValidAmount(double amount) =>
+      (amount > 0 && amount != null) ? true : false;
 }
