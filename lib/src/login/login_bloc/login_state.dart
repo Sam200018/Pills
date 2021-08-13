@@ -9,12 +9,12 @@ class LoginState {
       isFailureUser;
 
   LoginState(
-      {@required this.isEmailValid,
-      @required this.isPasswordValid,
-      @required this.isSubmitting,
-      @required this.isFailurePasword,
-      @required this.isSuccess,
-      @required this.isFailureUser});
+      {required this.isEmailValid,
+      required this.isPasswordValid,
+      required this.isSubmitting,
+      required this.isFailurePasword,
+      required this.isSuccess,
+      required this.isFailureUser});
 
   bool get isFormValid => isEmailValid && isPasswordValid;
 
@@ -70,12 +70,12 @@ class LoginState {
   }
 
   LoginState copyWith({
-    bool isEmailValid,
-    bool isPasswordValid,
-    bool isSubmitting,
-    bool isFailurePasword,
-    bool isSuccess,
-    bool isFailureUser,
+    bool? isEmailValid,
+    bool? isPasswordValid,
+    bool? isSubmitting,
+    bool? isFailurePasword,
+    bool? isSuccess,
+    bool? isFailureUser,
   }) {
     return LoginState(
       isEmailValid: isEmailValid ?? this.isEmailValid,
@@ -88,8 +88,8 @@ class LoginState {
   }
 
   LoginState update({
-    bool isEmailValid,
-    bool isPasswordValid,
+    bool? isEmailValid,
+    bool? isPasswordValid,
   }) {
     return copyWith(
       isEmailValid: isEmailValid,

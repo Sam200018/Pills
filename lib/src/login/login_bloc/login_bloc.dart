@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 import 'package:pills/src/utils/validatos.dart';
 import 'package:rxdart/rxdart.dart';
@@ -11,12 +10,9 @@ part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  AuthenticationRepository _userRepository;
+  final AuthenticationRepository _userRepository;
 
-  LoginBloc({@required AuthenticationRepository userRepository})
-      : assert(userRepository != null),
-        _userRepository = userRepository,
-        super(LoginState.empty());
+  LoginBloc(this._userRepository) : super(LoginState.empty());
 
   @override
   Stream<Transition<LoginEvent, LoginState>> transformEvents(
@@ -46,8 +42,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield* _mapLoginWithGooglePressedToState();
     }
     if (event is LoginWithCredentialsPressed) {
-      yield* _mapLoginWithCredecialsToState(
-          email: event.email, password: event.password);
+      yield* _mapLoginWithCredecialsToState(event.email, event.password);
     }
   }
 
@@ -69,16 +64,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   Stream<LoginState> _mapLoginWithCredecialsToState(
-      {String email, String password}) async* {
+      String email, String password) async* {
     yield LoginState.loading();
     try {
       await _userRepository.loginWithEmailAndPassword(
           email: email, password: password);
       yield LoginState.success();
-    } on FirebaseAuthException catch (e) {
-      if (e.message.contains('The user may have been deleted'))
+    } on Exception catch (e) {
+      if (e.toString().contains('The user may have been deleted'))
         yield LoginState.failureUser();
-      if (e.message.contains(
+      if (e.toString().contains(
           'The password is invalid or the user does not have a password.'))
         yield LoginState.failureCredential();
     }

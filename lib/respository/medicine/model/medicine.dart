@@ -6,12 +6,12 @@ import 'package:meta/meta.dart';
 @immutable
 class Medicine extends Equatable {
   Medicine({
-    this.id,
-    this.name,
-    this.compuestosActivos,
-    this.fechaDeCaducidad,
-    this.cantidad,
-    this.disponible,
+    required this.id,
+    required this.name,
+    required this.compuestosActivos,
+    required this.fechaDeCaducidad,
+    required this.cantidad,
+    required this.disponible,
   });
 
   final String id;

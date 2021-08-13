@@ -5,22 +5,14 @@ import 'package:pills/src/login/login_bloc/login_bloc.dart';
 import 'package:pills/src/login/LoginForm.dart';
 
 class LoginPage extends StatelessWidget {
-  final AuthenticationRepository _userRepository;
-
-  const LoginPage({Key key, AuthenticationRepository userRepository})
-      : assert(userRepository != null),
-        _userRepository = userRepository,
-        super(key: key);
-
-  static Route route() {
-    return MaterialPageRoute(builder: (_) => LoginPage());
-  }
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider<LoginBloc>(
-        create: (context) => LoginBloc(userRepository: _userRepository),
+        create: (context) =>
+            LoginBloc(context.read<AuthenticationRepository>()),
         child: SafeArea(
           child: LoginForm(),
         ),

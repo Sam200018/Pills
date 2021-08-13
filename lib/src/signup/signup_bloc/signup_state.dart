@@ -10,13 +10,13 @@ class SignupState {
       isFailure;
 
   SignupState({
-    @required this.isNameValid,
-    @required this.isLastNameValid,
-    @required this.isEmailVal,
-    @required this.isPassValid,
-    @required this.isSubmitting,
-    @required this.isSuccess,
-    @required this.isFailure,
+    required this.isNameValid,
+    required this.isLastNameValid,
+    required this.isEmailVal,
+    required this.isPassValid,
+    required this.isSubmitting,
+    required this.isSuccess,
+    required this.isFailure,
   });
 
   bool get isFormValid =>
@@ -70,13 +70,13 @@ class SignupState {
   }
 
   SignupState copyWith({
-    bool isNameValid,
-    bool isLastNameValid,
-    bool isEmailVal,
-    bool isPassValid,
-    bool isSubmitting,
-    bool isSuccess,
-    bool isFailure,
+    bool? isNameValid,
+    bool? isLastNameValid,
+    bool? isEmailVal,
+    bool? isPassValid,
+    bool? isSubmitting,
+    bool? isSuccess,
+    bool? isFailure,
   }) {
     return SignupState(
       isNameValid: isNameValid ?? this.isNameValid,
@@ -90,10 +90,10 @@ class SignupState {
   }
 
   SignupState update({
-    bool isNameValid,
-    bool isLastNameValid,
-    bool isEmailVal,
-    bool isPassValid,
+    bool? isNameValid,
+    bool? isLastNameValid,
+    bool? isEmailVal,
+    bool? isPassValid,
   }) {
     return copyWith(
       isNameValid: isNameValid,

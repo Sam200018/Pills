@@ -11,20 +11,21 @@ import 'package:pills/src/signup/SignUp_Page.dart';
 import 'package:pills/theme.dart';
 
 class App extends StatelessWidget {
-  const App({Key key, @required this.authenticationRepository})
-      : assert(authenticationRepository != null);
+  const App(
+      {Key? key, required AuthenticationRepository authenticationRepository})
+      : _authenticationRepository = authenticationRepository;
 
-  final AuthenticationRepository authenticationRepository;
+  final AuthenticationRepository _authenticationRepository;
 
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
-      value: authenticationRepository,
+      value: _authenticationRepository,
       child: BlocProvider(
         create: (_) =>
-            AuthBloc(authenticationRepository: authenticationRepository),
+            AuthBloc(authenticationRepository: _authenticationRepository),
         child: AppView(
-          authenticationRepository: authenticationRepository,
+          authenticationRepository: _authenticationRepository,
         ),
       ),
     );
@@ -34,7 +35,8 @@ class App extends StatelessWidget {
 class AppView extends StatefulWidget {
   final AuthenticationRepository authenticationRepository;
 
-  const AppView({Key key, this.authenticationRepository}) : super(key: key);
+  const AppView({Key? key, required this.authenticationRepository})
+      : super(key: key);
 
   @override
   _AppViewState createState() => _AppViewState();
@@ -59,14 +61,12 @@ class _AppViewState extends State<AppView> {
                 case AuthenticationStatus.authenticated:
                   return HomePage(
                       userRepository: widget.authenticationRepository);
-                  break;
+
                 case AuthenticationStatus.unauthenticated:
-                  return LoginPage(
-                      userRepository: widget.authenticationRepository);
-                  break;
+                  return LoginPage();
+
                 default:
                   return SplashScreen();
-                  break;
               }
             },
           );

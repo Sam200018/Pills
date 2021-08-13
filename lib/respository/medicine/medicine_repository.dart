@@ -8,18 +8,18 @@ class MedicineFirebase {
   final cloud_firestore.FirebaseFirestore _firestore;
   final user = FirebaseAuth.instance.currentUser;
 
-  MedicineFirebase({cloud_firestore.FirebaseFirestore firestore})
+  MedicineFirebase({cloud_firestore.FirebaseFirestore? firestore})
       : _firestore = firestore ?? cloud_firestore.FirebaseFirestore.instance;
 
   Future<void> createHouse() async {
     try {
       final house = await _firestore.collection('houses').add({
-        'members': [user.uid],
+        'members': [user?.uid],
       });
 
       await _firestore
           .collection('users')
-          .doc(user.uid)
+          .doc(user?.uid)
           .update({'isInTheHouse': true, 'house': house.id});
     } on cloud_firestore.FirebaseException catch (e) {
       throw e;
@@ -29,7 +29,7 @@ class MedicineFirebase {
   Stream<List<Medicine>> medicines() async* {
     String userHouse;
     userHouse =
-        await _firestore.collection('users').doc(user.uid).get().then((value) {
+        await _firestore.collection('users').doc(user?.uid).get().then((value) {
       return value.get('house').toString();
     });
 
@@ -42,8 +42,8 @@ class MedicineFirebase {
   }
 
   Future<void> addNewMedicine(Medicine medicine) {
-    String userHouse;
-    _firestore.collection('users').doc(user.uid).get().then((value) {
+    String? userHouse;
+    _firestore.collection('users').doc(user?.uid).get().then((value) {
       userHouse = value.get('house');
     });
     return _firestore
@@ -52,8 +52,8 @@ class MedicineFirebase {
   }
 
   Future<void> deleteMedicine(Medicine medicine) async {
-    String userHouse =
-        await _firestore.collection('users').doc(user.uid).get().then((value) {
+    String? userHouse =
+        await _firestore.collection('users').doc(user?.uid).get().then((value) {
       return value.get('house');
     });
 

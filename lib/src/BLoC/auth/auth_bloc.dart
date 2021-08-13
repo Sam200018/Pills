@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 import 'package:pedantic/pedantic.dart';
 
 import 'package:pills/respository/repository.dart';
@@ -11,11 +10,10 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthenticationState> {
   final AuthenticationRepository _authenticationRepository;
-  StreamSubscription<User> _userSubscription;
+  StreamSubscription<User>? _userSubscription;
 
-  AuthBloc({@required AuthenticationRepository authenticationRepository})
-      : assert(authenticationRepository != null),
-        _authenticationRepository = authenticationRepository,
+  AuthBloc({required AuthenticationRepository authenticationRepository})
+      : _authenticationRepository = authenticationRepository,
         super(const AuthenticationState.unknown()) {
     _userSubscription = _authenticationRepository.user
         .listen((user) => add(AuthenticationUserChanged(user)));

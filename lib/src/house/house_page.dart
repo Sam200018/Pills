@@ -39,9 +39,8 @@ class _HousePageState extends State<HousePage> {
 class _CreateHomeButton extends StatelessWidget {
   final MedicineFirebase _houseFirebase;
 
-  const _CreateHomeButton({Key key, MedicineFirebase houseFirebase})
-      : assert(houseFirebase != null),
-        _houseFirebase = houseFirebase,
+  const _CreateHomeButton({Key? key, required MedicineFirebase houseFirebase})
+      : _houseFirebase = houseFirebase,
         super(key: key);
   @override
   Widget build(BuildContext context) {

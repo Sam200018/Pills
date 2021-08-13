@@ -4,7 +4,7 @@ enum AuthenticationStatus { authenticated, unauthenticated, unknown }
 
 class AuthenticationState extends Equatable {
   const AuthenticationState._({
-    @required this.status,
+    required this.status,
     this.user = User.empty,
   });
 

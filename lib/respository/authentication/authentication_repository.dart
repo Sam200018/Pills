@@ -2,14 +2,13 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:cloud_firestore/cloud_firestore.dart' as cloud_firestore;
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:meta/meta.dart';
 
 import 'models/user.dart';
 
 class SignUpFailure implements Exception {
   final String message;
 
-  SignUpFailure({@required this.message});
+  SignUpFailure({required this.message});
 }
 
 class LogInWithEmailAndPasswordFailure implements Exception {}
@@ -26,9 +25,9 @@ class AuthenticationRepository {
   final cloud_firestore.FirebaseFirestore _firestore;
 
   AuthenticationRepository(
-      {firebase_auth.FirebaseAuth firebaseAuth,
-      GoogleSignIn googleSignIn,
-      cloud_firestore.FirebaseFirestore firestore})
+      {firebase_auth.FirebaseAuth? firebaseAuth,
+      GoogleSignIn? googleSignIn,
+      cloud_firestore.FirebaseFirestore? firestore})
       : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance,
         _googleSignIn = googleSignIn ?? GoogleSignIn.standard(),
         _firestore = firestore ?? cloud_firestore.FirebaseFirestore.instance;
@@ -41,18 +40,17 @@ class AuthenticationRepository {
 
   //*Registrar usuario con email y password
   Future<void> singUpWithEmailAndPassword({
-    @required String name,
-    @required String lastName,
-    @required String email,
-    @required String password,
+    required String name,
+    required String lastName,
+    required String email,
+    required String password,
   }) async {
-    assert(email != null && password != null);
     try {
       final user = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      await _firestore.collection('users').doc(user.user.uid).set({
+      await _firestore.collection('users').doc(user.user?.uid).set({
         'name': name,
         'lastName': lastName,
         'email': email,
@@ -71,24 +69,24 @@ class AuthenticationRepository {
   Future<void> loginWithGoogle() async {
     try {
       final googleUser = await _googleSignIn.signIn();
-      final googleAuth = await googleUser.authentication;
+      final googleAuth = await googleUser?.authentication;
       final credential = firebase_auth.GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
       );
       final user = await _firebaseAuth.signInWithCredential(credential);
 
       await _firestore
           .collection('users')
-          .doc(user.user.uid)
+          .doc(user.user?.uid)
           .get()
           .then((value) => {
                 if (!value.exists)
                   {
-                    _firestore.collection('users').doc(user.user.uid).set({
-                      'name': googleUser.displayName.split(' ').first,
-                      'lastName': googleUser.displayName.split(' ').last,
-                      'email': googleUser.email,
+                    _firestore.collection('users').doc(user.user?.uid).set({
+                      'name': googleUser?.displayName?.split(' ').first,
+                      'lastName': googleUser?.displayName?.split(' ').last,
+                      'email': googleUser?.email,
                       'isInTheHouse': false,
                       'house': null,
                     })
@@ -101,8 +99,7 @@ class AuthenticationRepository {
 
   //*Login con email y password
   Future<void> loginWithEmailAndPassword(
-      {@required String email, @required String password}) async {
-    assert(email != null && password != null);
+      {required String email, required String password}) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -127,7 +124,7 @@ class AuthenticationRepository {
   Stream<cloud_firestore.DocumentSnapshot> getIsInTheHouse() {
     final user = _firebaseAuth.currentUser;
 
-    return _firestore.collection('users').doc(user.uid).snapshots();
+    return _firestore.collection('users').doc(user?.uid).snapshots();
   }
 }
 
@@ -135,10 +132,10 @@ extension on firebase_auth.User {
   User get toUser {
     return User(
         id: uid,
-        email: email,
-        name: displayName,
-        lastName: null,
-        house: null,
+        email: email.toString(),
+        name: displayName.toString(),
+        lastName: '',
+        house: '',
         isInTheHouse: false);
   }
 }

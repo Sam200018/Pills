@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 class User extends Equatable {
@@ -11,20 +10,20 @@ class User extends Equatable {
   final String house;
 
   const User({
-    @required this.id,
-    @required this.name,
-    @required this.lastName,
-    @required this.email,
-    @required this.isInTheHouse,
-    @required this.house,
+    required this.id,
+    required this.name,
+    required this.lastName,
+    required this.email,
+    required this.isInTheHouse,
+    required this.house,
   });
 
   static const empty = User(
       email: '',
       id: '',
-      name: null,
-      lastName: null,
-      house: null,
+      name: '',
+      lastName: '',
+      house: '',
       isInTheHouse: false);
 
   factory User.fromJson(String str) => User.fromMap(json.decode(str));

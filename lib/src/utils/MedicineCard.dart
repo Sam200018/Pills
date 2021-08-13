@@ -6,7 +6,7 @@ import 'package:pills/src/utils/utilsColors.dart';
 class MedicineCard extends StatelessWidget {
   final Medicine _medicine;
 
-  const MedicineCard({Key key, Medicine medicine})
+  const MedicineCard(Medicine medicine, {Key? key})
       : _medicine = medicine,
         super(key: key);
 

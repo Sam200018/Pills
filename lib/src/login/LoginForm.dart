@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pills/src/login/login_bloc/login_bloc.dart';
 
 class LoginForm extends StatefulWidget {
+  const LoginForm({Key? key}) : super(key: key);
   @override
   _LoginFormState createState() => _LoginFormState();
 }
@@ -12,7 +13,7 @@ class _LoginFormState extends State<LoginForm> {
   final TextEditingController _emailController = TextEditingController(),
       _passwordController = TextEditingController();
 
-  LoginBloc _loginBloc;
+  late LoginBloc _loginBloc;
 
   @override
   void initState() {
@@ -74,13 +75,13 @@ class _LoginFormState extends State<LoginForm> {
             children: [
               Text('Image'),
               SizedBox(height: 16.0),
-              _EmailInput(email: _emailController),
+              _EmailInput(_emailController),
               SizedBox(height: 16.0),
-              _PasswordInput(password: _passwordController),
+              _PasswordInput(_passwordController),
               SizedBox(height: 16.0),
               _LoginButton(
-                email: _emailController,
-                password: _passwordController,
+                _passwordController,
+                _emailController,
               ),
               SizedBox(height: 16.0),
               _LoginWithGoogleButton(),
@@ -97,7 +98,7 @@ class _LoginFormState extends State<LoginForm> {
 class _EmailInput extends StatelessWidget {
   final TextEditingController email;
 
-  const _EmailInput({Key key, this.email}) : super(key: key);
+  const _EmailInput(this.email, {Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginBloc, LoginState>(
@@ -120,7 +121,7 @@ class _EmailInput extends StatelessWidget {
 class _PasswordInput extends StatelessWidget {
   final TextEditingController password;
 
-  const _PasswordInput({Key key, this.password}) : super(key: key);
+  const _PasswordInput(this.password, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +149,7 @@ class _LoginButton extends StatelessWidget {
   bool isLoginButtonEnable(LoginState state) =>
       state.isFormValid && isPopulated && !state.isSubmitting;
 
-  const _LoginButton({this.password, this.email});
+  const _LoginButton(this.password, this.email);
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginBloc, LoginState>(

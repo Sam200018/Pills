@@ -17,45 +17,56 @@ class _MedicinesState extends State<Medicines> {
       builder: (context, state) {
         if (state is MedicineInitial) {
           return Center(child: CircularProgressIndicator());
-        }
-        if (state is MedicinesNotLoaded) {
+        } else if (state is MedicinesNotLoaded) {
           return Center(
             child: Column(
               children: [Icon(Icons.error), Text('Cannot load medicines')],
             ),
           );
-        }
-        if (state is MedicinesLoaded) {
+        } else if (state is MedicinesLoaded) {
           List<Medicine> medicines = state.medicines;
-          return Expanded(
-            child: ListView.builder(
-              itemCount: medicines.length,
-              itemBuilder: (context, int index) => Dismissible(
-                key: UniqueKey(),
-                background: Container(
-                  color: Colors.red,
-                  margin: EdgeInsets.symmetric(vertical: 20),
-                  child: Icon(
-                    Icons.delete_forever,
-                    size: 40.0,
+          return (medicines.length == 0)
+              ? Center(
+                  child: Column(
+                    children: [
+                      Text('Parece que no tienes medicinas agregadas :('),
+                      Text('Polsa el boton de + para agregar una  ')
+                    ],
                   ),
-                ),
-                onDismissed: (DismissDirection direction) {
-                  BlocProvider.of<MedicineBloc>(context)
-                      .add(DeleteMedicine(medicines[index]));
-                },
-                child: MedicineCard(
-                  medicine: medicines[index],
-                ),
-              ),
+                )
+              : Expanded(
+                  child: ListView.builder(
+                    itemCount: medicines.length,
+                    itemBuilder: (context, int index) => Dismissible(
+                      key: UniqueKey(),
+                      background: Container(
+                        color: Colors.red,
+                        margin: EdgeInsets.symmetric(vertical: 20),
+                        child: Icon(
+                          Icons.delete_forever,
+                          size: 40.0,
+                        ),
+                      ),
+                      onDismissed: (DismissDirection direction) {
+                        BlocProvider.of<MedicineBloc>(context)
+                            .add(DeleteMedicine(medicines[index]));
+                      },
+                      child: MedicineCard(
+                        medicines[index],
+                      ),
+                    ),
+                  ),
+                );
+        } else {
+          return Center(
+            child: Column(
+              children: [
+                Text('Parece que no tienes medicinas agregadas :('),
+                Text('Polsa el boton de + para agregar una  ')
+              ],
             ),
           );
         }
-        return Container(
-          child: Center(
-            child: Text('Holi'),
-          ),
-        );
       },
     );
   }

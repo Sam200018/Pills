@@ -7,10 +7,10 @@ import 'package:pills/src/signup/signup_bloc/signup_bloc.dart';
 class SignupForm extends StatefulWidget {
   final AuthenticationRepository _userRepository;
 
-  const SignupForm({Key key, AuthenticationRepository userRepository})
-      : assert(userRepository != null),
-        _userRepository = userRepository,
-        super(key: key);
+  const SignupForm(
+    this._userRepository, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   _SignupFormState createState() => _SignupFormState();
@@ -21,10 +21,10 @@ class _SignupFormState extends State<SignupForm> {
       _lastNameController = TextEditingController(),
       _emailContrl = TextEditingController(),
       _passwordContrl = TextEditingController();
-
-  SignupBloc _signupBloc;
-
   AuthenticationRepository get _userRepository => widget._userRepository;
+
+  late SignupBloc _signupBloc;
+
   @override
   void initState() {
     super.initState();
@@ -81,10 +81,7 @@ class _SignupFormState extends State<SignupForm> {
         if (state.isSuccess) {
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(
-                  builder: (context) => LoginPage(
-                        userRepository: _userRepository,
-                      )),
+              MaterialPageRoute(builder: (context) => LoginPage()),
               (route) => false);
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
@@ -134,7 +131,7 @@ class _SignupFormState extends State<SignupForm> {
 class _NameInput extends StatelessWidget {
   final TextEditingController name;
 
-  const _NameInput({Key key, this.name}) : super(key: key);
+  const _NameInput({Key? key, required this.name}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -158,7 +155,7 @@ class _NameInput extends StatelessWidget {
 class _LastNameInput extends StatelessWidget {
   final TextEditingController lastName;
 
-  const _LastNameInput({Key key, this.lastName}) : super(key: key);
+  const _LastNameInput({Key? key, required this.lastName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +179,7 @@ class _LastNameInput extends StatelessWidget {
 class _EmailInput extends StatelessWidget {
   final TextEditingController email;
 
-  const _EmailInput({Key key, this.email}) : super(key: key);
+  const _EmailInput({Key? key, required this.email}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -206,7 +203,7 @@ class _EmailInput extends StatelessWidget {
 class _InputPassword extends StatelessWidget {
   final TextEditingController password;
 
-  const _InputPassword({Key key, this.password}) : super(key: key);
+  const _InputPassword({Key? key, required this.password}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -231,11 +228,11 @@ class _SignUpWithCredentialsButton extends StatelessWidget {
   final TextEditingController name, lastName, email, password;
 
   const _SignUpWithCredentialsButton({
-    Key key,
-    this.name,
-    this.lastName,
-    this.email,
-    this.password,
+    Key? key,
+    required this.name,
+    required this.lastName,
+    required this.email,
+    required this.password,
   }) : super(key: key);
 
   bool get isPopulatedForm =>
@@ -272,15 +269,13 @@ class _SignUpWithCredentialsButton extends StatelessWidget {
 class _LoginPageButton extends StatelessWidget {
   final AuthenticationRepository userRepository;
 
-  const _LoginPageButton({Key key, this.userRepository}) : super(key: key);
+  const _LoginPageButton({Key? key, required this.userRepository})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () => Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-              builder: (context) => LoginPage(
-                    userRepository: userRepository,
-                  )),
+          MaterialPageRoute(builder: (context) => LoginPage()),
           (route) => false),
       child: Text('Ya tengo cuenta'),
     );

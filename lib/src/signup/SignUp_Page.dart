@@ -7,14 +7,9 @@ import 'package:pills/src/signup/signup_bloc/signup_bloc.dart';
 class SignUpPage extends StatelessWidget {
   final AuthenticationRepository _userRepository;
 
-  const SignUpPage({Key key, AuthenticationRepository userRepository})
-      : assert(userRepository != null),
-        _userRepository = userRepository,
+  const SignUpPage({Key? key, required AuthenticationRepository userRepository})
+      : _userRepository = userRepository,
         super(key: key);
-
-  static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => SignUpPage());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +18,7 @@ class SignUpPage extends StatelessWidget {
         create: (context) => SignupBloc(userRepository: _userRepository),
         child: SafeArea(
           child: SignupForm(
-            userRepository: _userRepository,
+            _userRepository,
           ),
         ),
       ),

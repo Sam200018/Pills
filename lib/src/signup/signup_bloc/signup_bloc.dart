@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:pills/respository/authentication/authentication_repository.dart';
 import 'package:pills/src/utils/validatos.dart';
 import 'package:rxdart/rxdart.dart';
@@ -13,9 +12,8 @@ part 'signup_state.dart';
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
   AuthenticationRepository _userRepository;
 
-  SignupBloc({@required AuthenticationRepository userRepository})
-      : assert(userRepository != null),
-        _userRepository = userRepository,
+  SignupBloc({required AuthenticationRepository userRepository})
+      : _userRepository = userRepository,
         super(SignupState.empty());
 
   @override
@@ -55,10 +53,11 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     }
     if (event is SubmittingForm) {
       yield* _mapSubmitingFormToState(
-          name: event.name,
-          lastName: event.lastName,
-          email: event.emailRegister,
-          password: event.passwordRegister);
+        event.name,
+        event.lastName,
+        event.emailRegister,
+        event.passwordRegister,
+      );
     }
   }
 
@@ -81,7 +80,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   }
 
   Stream<SignupState> _mapSubmitingFormToState(
-      {String name, String lastName, String email, String password}) async* {
+      String name, String lastName, String email, String password) async* {
     try {
       await _userRepository.singUpWithEmailAndPassword(
         name: name,

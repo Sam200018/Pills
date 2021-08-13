@@ -10,13 +10,13 @@ class AddMedicineState {
       isSuccess;
 
   AddMedicineState({
-    @required this.isMedicineNameValid,
-    @required this.isAmountValid,
-    @required this.isAmountAbleValid,
-    @required this.isActiveCompoundValid,
-    @required this.isSubmitting,
-    @required this.isFailure,
-    @required this.isSuccess,
+    required this.isMedicineNameValid,
+    required this.isAmountValid,
+    required this.isAmountAbleValid,
+    required this.isActiveCompoundValid,
+    required this.isSubmitting,
+    required this.isFailure,
+    required this.isSuccess,
   });
 
   bool get isFormValid => isMedicineNameValid && isAmountValid && isAmountValid;
@@ -70,13 +70,13 @@ class AddMedicineState {
   }
 
   AddMedicineState copyWith({
-    bool isMedicineNameValid,
-    bool isAmountValid,
-    bool isAmountAbleValid,
-    bool isActiveCompoundValid,
-    bool isSubmitting,
-    bool isFailure,
-    bool isSuccess,
+    bool? isMedicineNameValid,
+    bool? isAmountValid,
+    bool? isAmountAbleValid,
+    bool? isActiveCompoundValid,
+    bool? isSubmitting,
+    bool? isFailure,
+    bool? isSuccess,
   }) {
     return AddMedicineState(
         isMedicineNameValid: isMedicineNameValid ?? this.isMedicineNameValid,
@@ -90,10 +90,10 @@ class AddMedicineState {
   }
 
   AddMedicineState update({
-    bool isMedicineNameValid,
-    bool isAmountValid,
-    bool isAmountAbleValid,
-    bool isActiveCompoundValid,
+    bool? isMedicineNameValid,
+    bool? isAmountValid,
+    bool? isAmountAbleValid,
+    bool? isActiveCompoundValid,
   }) {
     return copyWith(
         isMedicineNameValid: isMedicineNameValid,

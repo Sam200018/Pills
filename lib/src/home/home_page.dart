@@ -11,14 +11,9 @@ import 'package:pills/src/medicines/medicine_bloc/medicine_bloc.dart';
 class HomePage extends StatefulWidget {
   final AuthenticationRepository _userRepository;
 
-  const HomePage({Key key, AuthenticationRepository userRepository})
-      : assert(userRepository != null),
-        _userRepository = userRepository,
+  const HomePage({Key? key, required AuthenticationRepository userRepository})
+      : _userRepository = userRepository,
         super(key: key);
-
-  static Route route() {
-    return MaterialPageRoute(builder: (_) => HomePage());
-  }
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -35,11 +30,10 @@ class _HomePageState extends State<HomePage> {
             !snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
         }
-        if (snapshot.data.get('isInTheHouse')) {
+        if (snapshot.data?.get('isInTheHouse')) {
           return BlocProvider<MedicineBloc>(
             create: (context) =>
-                MedicineBloc(medicineRepository: MedicineFirebase())
-                  ..add(LoadMedicines()),
+                MedicineBloc(MedicineFirebase())..add(LoadMedicines()),
             child: MedicinePage(),
           );
         } else {

@@ -10,7 +10,7 @@ abstract class AddMedicineEvent extends Equatable {
 class MedicineNameChanged extends AddMedicineEvent {
   final String name;
 
-  MedicineNameChanged({@required this.name});
+  MedicineNameChanged({required this.name});
 
   @override
   List<Object> get props => [name];
@@ -19,7 +19,7 @@ class MedicineNameChanged extends AddMedicineEvent {
 class AmountChanged extends AddMedicineEvent {
   final double amount;
 
-  AmountChanged({@required this.amount});
+  AmountChanged({required this.amount});
 
   @override
   List<Object> get props => [amount];
@@ -28,7 +28,7 @@ class AmountChanged extends AddMedicineEvent {
 class AmountAbleChanged extends AddMedicineEvent {
   final double amountAble;
 
-  AmountAbleChanged({@required this.amountAble});
+  AmountAbleChanged({required this.amountAble});
 
   @override
   List<Object> get props => [amountAble];
@@ -37,7 +37,7 @@ class AmountAbleChanged extends AddMedicineEvent {
 class ActiveCompoundChanged extends AddMedicineEvent {
   final String activeCompound;
 
-  ActiveCompoundChanged({@required this.activeCompound});
+  ActiveCompoundChanged({required this.activeCompound});
 
   @override
   List<Object> get props => [activeCompound];
@@ -46,7 +46,7 @@ class ActiveCompoundChanged extends AddMedicineEvent {
 class SubmittingForm extends AddMedicineEvent {
   final Medicine medicine;
 
-  SubmittingForm({@required this.medicine});
+  SubmittingForm({required this.medicine});
 
   @override
   List<Object> get props => [medicine];

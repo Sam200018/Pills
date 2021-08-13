@@ -9,12 +9,9 @@ part 'medicine_state.dart';
 
 class MedicineBloc extends Bloc<MedicineEvent, MedicineState> {
   final MedicineFirebase _medicinesRepository;
-  StreamSubscription _medicinesSubscription;
+  StreamSubscription? _medicinesSubscription;
 
-  MedicineBloc({MedicineFirebase medicineRepository})
-      : assert(medicineRepository != null),
-        _medicinesRepository = medicineRepository,
-        super(MedicineInitial());
+  MedicineBloc(this._medicinesRepository) : super(MedicineInitial());
 
   @override
   Stream<MedicineState> mapEventToState(
