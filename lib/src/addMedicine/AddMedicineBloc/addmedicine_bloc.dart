@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:pills/respository/medicine/medicine_repository.dart';
 import 'package:pills/respository/medicine/model/medicine.dart';
 import 'package:pills/src/utils/validatos.dart';
 import 'package:rxdart/rxdart.dart';
@@ -8,7 +9,10 @@ part 'addmedicine_event.dart';
 part 'addmedicine_state.dart';
 
 class AddmedicineBloc extends Bloc<AddMedicineEvent, AddMedicineState> {
-  AddmedicineBloc() : super(AddMedicineState.empty());
+  final MedicineFirebase medicineFirebase;
+
+  AddmedicineBloc({required this.medicineFirebase})
+      : super(AddMedicineState.empty());
 
   @override
   Stream<Transition<AddMedicineEvent, AddMedicineState>> transformEvents(

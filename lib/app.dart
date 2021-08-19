@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:pills/respository/authentication/authentication_repository.dart';
+import 'package:pills/respository/medicine/medicine_repository.dart';
 import 'package:pills/src/BLoC/auth/auth_bloc.dart';
-import 'package:pills/src/addMedicine/addMedicinesPage.dart';
+import 'package:pills/src/addMedicine/AddMedicineBloc/addmedicine_bloc.dart';
+import 'package:pills/src/addMedicine/MedicineDetailsPage.dart';
 import 'package:pills/src/home/home_page.dart';
 import 'package:pills/src/login/login_page.dart';
 import 'package:pills/src/screens/splash_page.dart';
@@ -21,9 +23,16 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
       value: _authenticationRepository,
-      child: BlocProvider(
-        create: (_) =>
-            AuthBloc(authenticationRepository: _authenticationRepository),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthBloc>(
+            create: (_) =>
+                AuthBloc(authenticationRepository: _authenticationRepository),
+          ),
+          BlocProvider<AddmedicineBloc>(
+              create: (_) =>
+                  AddmedicineBloc(medicineFirebase: MedicineFirebase())),
+        ],
         child: AppView(
           authenticationRepository: _authenticationRepository,
         ),
@@ -73,7 +82,9 @@ class _AppViewState extends State<AppView> {
         },
         'signup': (context) =>
             SignUpPage(userRepository: widget.authenticationRepository),
-        '/addMedicine': (context) => AddMedicinePage()
+        '/medicineDeatils': (context) {
+          return MedicineDetailsPage();
+        }
       },
     );
   }

@@ -23,41 +23,12 @@ class _SignupFormState extends State<SignupForm> {
       _passwordContrl = TextEditingController();
   AuthenticationRepository get _userRepository => widget._userRepository;
 
-  late SignupBloc _signupBloc;
-
-  @override
-  void initState() {
-    super.initState();
-    _signupBloc = BlocProvider.of<SignupBloc>(context);
-    _nameController.addListener(_onNameChanged);
-    _lastNameController.addListener(_onLastNameChanged);
-    _emailContrl.addListener(_onEmailChanged);
-    _passwordContrl.addListener(_onPasswordChanged);
-  }
-
-  void _onNameChanged() {
-    _signupBloc.add(NameChanged(name: _nameController.text));
-  }
-
-  void _onLastNameChanged() {
-    _signupBloc.add(LastNameChanged(lastName: _lastNameController.text));
-  }
-
-  void _onEmailChanged() {
-    _signupBloc.add(ChangedEmail(emailRegister: _emailContrl.text));
-  }
-
-  void _onPasswordChanged() {
-    _signupBloc.add(ChangedPassword(passwordRegister: _passwordContrl.text));
-  }
-
   @override
   void dispose() {
     _nameController.dispose();
     _lastNameController.dispose();
     _passwordContrl.dispose();
     _emailContrl.dispose();
-
     super.dispose();
   }
 

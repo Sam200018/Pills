@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pills/respository/medicine/model/medicine.dart';
+import 'package:pills/src/addMedicine/MedicineDetailsPage.dart';
 
 import 'package:pills/src/utils/utilsColors.dart';
 
@@ -12,22 +13,30 @@ class MedicineCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 20),
-      width: double.infinity,
-      height: 100,
-      color: bottonGray(),
-      child: ListTile(
-        title: Text(_medicine.name),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Fecha de caducidad: ${_medicine.fechaDeCaducidad}'),
-            Text('Cantidad disponible: ${_medicine.cantidad}'),
-          ],
+    return GestureDetector(
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 20),
+        width: double.infinity,
+        height: 100,
+        color: bottonGray(),
+        child: ListTile(
+          title: Text(_medicine.name),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Fecha de caducidad: ${_medicine.fechaDeCaducidad}'),
+              Text('Cantidad disponible: ${_medicine.cantidad}'),
+            ],
+          ),
         ),
-        onTap: () => print('${_medicine.name}'),
       ),
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(builder: (contexte) {
+          return MedicineDetailsPage(
+            passedMedicine: _medicine,
+          );
+        }));
+      },
     );
   }
 }

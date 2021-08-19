@@ -26,14 +26,7 @@ class _MedicinesState extends State<Medicines> {
         } else if (state is MedicinesLoaded) {
           List<Medicine> medicines = state.medicines;
           return (medicines.length == 0)
-              ? Center(
-                  child: Column(
-                    children: [
-                      Text('Parece que no tienes medicinas agregadas :('),
-                      Text('Polsa el boton de + para agregar una  ')
-                    ],
-                  ),
-                )
+              ? _NotMedicines()
               : Expanded(
                   child: ListView.builder(
                     itemCount: medicines.length,
@@ -58,16 +51,25 @@ class _MedicinesState extends State<Medicines> {
                   ),
                 );
         } else {
-          return Center(
-            child: Column(
-              children: [
-                Text('Parece que no tienes medicinas agregadas :('),
-                Text('Polsa el boton de + para agregar una  ')
-              ],
-            ),
-          );
+          return _NotMedicines();
         }
       },
+    );
+  }
+}
+
+class _NotMedicines extends StatelessWidget {
+  const _NotMedicines({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        children: [
+          Text('Parece que no tienes medicinas agregadas :('),
+          Text('Polsa el boton de + para agregar una  ')
+        ],
+      ),
     );
   }
 }

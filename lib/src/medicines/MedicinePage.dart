@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pills/respository/medicine/model/medicine.dart';
 import 'package:pills/src/medicines/Medicines.dart';
 
 import 'package:pills/src/utils/UtilsWidgets.dart';
@@ -40,7 +41,8 @@ class MedicinePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/addMedicine');
+          Navigator.pushNamed(context, '/medicineDeatils',
+              arguments: Medicine.empty());
         },
         child: Icon(Icons.add),
       ),
