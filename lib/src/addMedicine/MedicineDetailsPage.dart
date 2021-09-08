@@ -12,9 +12,6 @@ class MedicineDetailsPage extends StatefulWidget {
 }
 
 class _MedicineDetailsPageState extends State<MedicineDetailsPage> {
-  //TODO:aca tenemos que revisar si funciona
-  // creando un medicamento en Firebase en
-  // la cuenta: sastreriabb@hotmail.com
   Medicine newMedicine = Medicine.empty();
 
   @override
@@ -30,37 +27,57 @@ class _MedicineDetailsPageState extends State<MedicineDetailsPage> {
       appBar: AppBar(
         title: Text("Crear Medicamento"),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            NameInput(
-              nameMedicine: newMedicine,
-              passedName: newMedicine.name,
-            ),
-            SizedBox(height: 16.0),
-            AmountInput(
-              amountMedicine: newMedicine,
-              passedAmout: newMedicine.cantidad,
-            ),
-            SizedBox(height: 16.0),
-            AmountAbleInput(
-              amountAbleMedicine: newMedicine,
-              passedAmountAble: newMedicine.disponible,
-            ),
-            SizedBox(height: 16.0),
-            DateInput(
-                passedDateTime: newMedicine.fechaDeCaducidad,
-                dateTimeMedicine: newMedicine),
-            SizedBox(height: 16.0),
-            TextButton(
-              onPressed: () {
-                print(newMedicine);
-              },
-              child: Text(
-                (newMedicine.id != null) ? 'Guardar' : 'Crear',
+      body: Align(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              NameInput(
+                nameMedicine: newMedicine,
+                passedName: newMedicine.name,
               ),
-            ),
-          ],
+              SizedBox(height: 16.0),
+              AmountInput(
+                amountMedicine: newMedicine,
+                passedAmout: newMedicine.cantidad,
+              ),
+              SizedBox(height: 16.0),
+              AmountAbleInput(
+                amountAbleMedicine: newMedicine,
+                passedAmountAble: newMedicine.disponible,
+              ),
+              SizedBox(height: 16.0),
+              DateInput(
+                  passedDateTime: newMedicine.fechaDeCaducidad,
+                  dateTimeMedicine: newMedicine),
+              SizedBox(height: 16.0),
+              ReasonInput(
+                reasonMedicine: newMedicine,
+                passedReason: newMedicine.reason,
+              ),
+              SizedBox(height: 16.0),
+              ElementListInput(),
+              SizedBox(height: 16.0),
+              // TextButton(
+              //   onPressed: () {
+              //     print(newMedicine);
+              //   },
+              //   child: Text(
+              //     (newMedicine.id != null) ? 'Guardar' : 'Crear',
+              //   ),
+              // ),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: Container(
+        alignment: AlignmentDirectional.bottomCenter,
+        child: TextButton(
+          onPressed: () {
+            print(newMedicine);
+          },
+          child: Text(
+            (newMedicine.id != null) ? 'GUARDAR' : 'CREAR',
+          ),
         ),
       ),
     );
@@ -79,6 +96,10 @@ class NameInput extends StatelessWidget {
     return TextFormField(
       initialValue: passedName ?? " ",
       keyboardType: TextInputType.name,
+      decoration: InputDecoration(
+        labelText: 'Nombre del medicamento',
+        hintText: 'Nombre del medicamento',
+      ),
       onChanged: (name) {
         nameMedicine.name = name;
       },
@@ -99,6 +120,9 @@ class AmountInput extends StatelessWidget {
     return TextFormField(
       initialValue: '$passedAmout',
       keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        labelText: 'Dosis',
+      ),
       onChanged: (amount) {
         amountMedicine.cantidad = double.parse(amount);
       },
@@ -119,6 +143,9 @@ class AmountAbleInput extends StatelessWidget {
     return TextFormField(
       initialValue: '$passedAmountAble',
       keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        labelText: 'Cantidad disponible',
+      ),
       onChanged: (amountAble) {
         amountAbleMedicine.disponible = double.parse(amountAble);
       },
@@ -138,6 +165,10 @@ class ReasonInput extends StatelessWidget {
     return TextFormField(
       initialValue: passedReason ?? " ",
       keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+        labelText: 'Razon medica',
+        hintText: 'Razon medica',
+      ),
       onChanged: (reason) {
         reasonMedicine.reason = reason;
       },
@@ -172,6 +203,9 @@ class _DateInputState extends State<DateInput> {
     return TextFormField(
       enableInteractiveSelection: false,
       controller: _inputDate,
+      decoration: InputDecoration(
+        labelText: 'Fecha de caducidad',
+      ),
       onTap: () {
         FocusScope.of(context).requestFocus(new FocusNode());
         _selectDate(context);
@@ -192,5 +226,37 @@ class _DateInputState extends State<DateInput> {
         _inputDate = TextEditingController(text: picked.toString());
       });
     }
+  }
+}
+
+class ElementListInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var deviceSize = MediaQuery.of(context).size;
+
+    return Container(
+        width: double.infinity,
+        child: Row(
+          children: [
+            Container(
+              width: deviceSize.width * .85,
+              child: TextFormField(
+                decoration: InputDecoration(),
+              ),
+            ),
+            Container(
+              alignment: AlignmentDirectional.center,
+              child: IconButton(
+                onPressed: () {
+                  print('se agrego un medicamento');
+                },
+                icon: Icon(
+                  Icons.add_circle_outline,
+                  size: 45.0,
+                ),
+              ),
+            ),
+          ],
+        ));
   }
 }
