@@ -31,11 +31,13 @@ class MedicineCard extends StatelessWidget {
         ),
       ),
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (contexte) {
-          return MedicineDetailsPage(
-            passedMedicine: _medicine,
-          );
-        }));
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) {
+            return MedicineDetailsPage(
+              receivedMedicine: _medicine,
+            );
+          },
+        ));
       },
     );
   }
