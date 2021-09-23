@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pills/respository/medicine/model/medicine.dart';
+
+import 'AddMedicineBloc/addmedicine_bloc.dart';
 
 class MedicineDetailsPage extends StatefulWidget {
   final Medicine? receivedMedicine;
@@ -27,46 +30,38 @@ class _MedicineDetailsPageState extends State<MedicineDetailsPage> {
       appBar: AppBar(
         title: Text("Crear Medicamento"),
       ),
-      body: Align(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              NameInput(
-                nameMedicine: newMedicine,
-                passedName: newMedicine.name,
-              ),
-              SizedBox(height: 16.0),
-              AmountInput(
-                amountMedicine: newMedicine,
-                passedAmout: newMedicine.cantidad,
-              ),
-              SizedBox(height: 16.0),
-              AmountAbleInput(
-                amountAbleMedicine: newMedicine,
-                passedAmountAble: newMedicine.disponible,
-              ),
-              SizedBox(height: 16.0),
-              DateInput(
-                  passedDateTime: newMedicine.fechaDeCaducidad,
-                  dateTimeMedicine: newMedicine),
-              SizedBox(height: 16.0),
-              ReasonInput(
-                reasonMedicine: newMedicine,
-                passedReason: newMedicine.reason,
-              ),
-              SizedBox(height: 16.0),
-              ElementListInput(),
-              SizedBox(height: 16.0),
-              // TextButton(
-              //   onPressed: () {
-              //     print(newMedicine);
-              //   },
-              //   child: Text(
-              //     (newMedicine.id != null) ? 'Guardar' : 'Crear',
-              //   ),
-              // ),
-            ],
-          ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            NameInput(
+              nameMedicine: newMedicine,
+              passedName: newMedicine.name,
+            ),
+            SizedBox(height: 16.0),
+            AmountInput(
+              amountMedicine: newMedicine,
+              passedAmout: newMedicine.cantidad,
+            ),
+            SizedBox(height: 16.0),
+            AmountAbleInput(
+              amountAbleMedicine: newMedicine,
+              passedAmountAble: newMedicine.disponible,
+            ),
+            SizedBox(height: 16.0),
+            DateInput(
+                passedDateTime: newMedicine.fechaDeCaducidad,
+                dateTimeMedicine: newMedicine),
+            SizedBox(height: 16.0),
+            ReasonInput(
+              reasonMedicine: newMedicine,
+              passedReason: newMedicine.reason,
+            ),
+            SizedBox(height: 16.0),
+            ElementListInput(
+              listMedicine: newMedicine,
+            ),
+            SizedBox(height: 16.0),
+          ],
         ),
       ),
       floatingActionButton: Container(
@@ -93,15 +88,22 @@ class NameInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      initialValue: passedName ?? " ",
-      keyboardType: TextInputType.name,
-      decoration: InputDecoration(
-        labelText: 'Nombre del medicamento',
-        hintText: 'Nombre del medicamento',
-      ),
-      onChanged: (name) {
-        nameMedicine.name = name;
+    return BlocBuilder<AddmedicineBloc, AddMedicineState>(
+      builder: (context, state) {
+        return TextFormField(
+          initialValue: passedName ?? " ",
+          keyboardType: TextInputType.name,
+          decoration: InputDecoration(
+            labelText: 'Nombre del medicamento',
+            hintText: 'Nombre del medicamento',
+            errorText: (!state.isMedicineNameValid) ? 'Nombre invalido' : null,
+          ),
+          onChanged: (name) {
+            nameMedicine.name = name;
+            BlocProvider.of<AddmedicineBloc>(context)
+                .add(MedicineNameChanged(name: name));
+          },
+        );
       },
     );
   }
@@ -117,14 +119,22 @@ class AmountInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      initialValue: '$passedAmout',
-      keyboardType: TextInputType.number,
-      decoration: InputDecoration(
-        labelText: 'Dosis',
-      ),
-      onChanged: (amount) {
-        amountMedicine.cantidad = double.parse(amount);
+    return BlocBuilder<AddmedicineBloc, AddMedicineState>(
+      builder: (context, state) {
+        return TextFormField(
+          initialValue: '$passedAmout',
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            labelText: 'Dosis',
+            errorText:
+                (!state.isAmountValid) ? "Ingrese una cantidad valida" : null,
+          ),
+          onChanged: (amount) {
+            amountMedicine.cantidad = double.parse(amount);
+            BlocProvider.of<AddmedicineBloc>(context)
+                .add(AmountChanged(amount: double.parse(amount)));
+          },
+        );
       },
     );
   }
@@ -140,14 +150,22 @@ class AmountAbleInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      initialValue: '$passedAmountAble',
-      keyboardType: TextInputType.number,
-      decoration: InputDecoration(
-        labelText: 'Cantidad disponible',
-      ),
-      onChanged: (amountAble) {
-        amountAbleMedicine.disponible = double.parse(amountAble);
+    return BlocBuilder<AddmedicineBloc, AddMedicineState>(
+      builder: (context, state) {
+        return TextFormField(
+          initialValue: '$passedAmountAble',
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            labelText: 'Cantidad disponible',
+            errorText:
+                (state.isAmountAbleValid) ? 'Ingrese una cantidad valid' : null,
+          ),
+          onChanged: (amountAble) {
+            amountAbleMedicine.disponible = double.parse(amountAble);
+            BlocProvider.of<AddmedicineBloc>(context)
+                .add(AmountAbleChanged(amountAble: double.parse(amountAble)));
+          },
+        );
       },
     );
   }
@@ -163,8 +181,11 @@ class ReasonInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      minLines: 3,
+      maxLines: 5,
       initialValue: passedReason ?? " ",
       keyboardType: TextInputType.text,
+      autocorrect: false,
       decoration: InputDecoration(
         labelText: 'Razon medica',
         hintText: 'Razon medica',
@@ -230,33 +251,52 @@ class _DateInputState extends State<DateInput> {
 }
 
 class ElementListInput extends StatelessWidget {
+  final Medicine listMedicine;
+
+  const ElementListInput({Key? key, required this.listMedicine})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var deviceSize = MediaQuery.of(context).size;
 
     return Container(
-        width: double.infinity,
-        child: Row(
-          children: [
-            Container(
-              width: deviceSize.width * .85,
-              child: TextFormField(
-                decoration: InputDecoration(),
+      width: double.infinity,
+      child: Row(
+        children: [
+          Container(
+            width: deviceSize.width * .85,
+            child: BlocBuilder<AddmedicineBloc, AddMedicineState>(
+              builder: (context, state) {
+                return TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Compuesto activo',
+                    errorText: (!state.isActiveCompoundValid)
+                        ? 'Ingrese un compuesto valido'
+                        : null,
+                  ),
+                  onChanged: (activeCompound) {
+                    BlocProvider.of<AddmedicineBloc>(context).add(
+                        ActiveCompoundChanged(activeCompound: activeCompound));
+                  },
+                );
+              },
+            ),
+          ),
+          Container(
+            alignment: AlignmentDirectional.center,
+            child: IconButton(
+              onPressed: () {
+                print('se agrego un medicamento');
+              },
+              icon: Icon(
+                Icons.add_circle_outline,
+                size: 45.0,
               ),
             ),
-            Container(
-              alignment: AlignmentDirectional.center,
-              child: IconButton(
-                onPressed: () {
-                  print('se agrego un medicamento');
-                },
-                icon: Icon(
-                  Icons.add_circle_outline,
-                  size: 45.0,
-                ),
-              ),
-            ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 }
