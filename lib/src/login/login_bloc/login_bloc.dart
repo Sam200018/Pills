@@ -1,8 +1,7 @@
-import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:pills/src/utils/validatos.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pills/respository/authentication/authentication_repository.dart';
 
@@ -12,70 +11,46 @@ part 'login_state.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthenticationRepository _userRepository;
 
-  LoginBloc(this._userRepository) : super(LoginState.empty());
-
-  @override
-  Stream<Transition<LoginEvent, LoginState>> transformEvents(
-      Stream<LoginEvent> events, transitionFn) {
-    final nonDebounceStream = events.where(
-        (event) => (event is! EmailChanged && event is! PasswordChanged));
-
-    final debounceStream = events
-        .where((event) => (event is EmailChanged || event is PasswordChanged))
-        .debounceTime(Duration(milliseconds: 300));
-
-    return super.transformEvents(
-        nonDebounceStream.mergeWith([debounceStream]), transitionFn);
+  LoginBloc(this._userRepository) : super(LoginState.empty()) {
+    on<EmailChanged>(_onEmailChangedToState);
+    on<PasswordChanged>(_onPasswordChangedToState);
+    on<LoginWithGooglePressed>(_onLoginWithGooglePressedToState);
+    on<LoginWithCredentialsPressed>(_onLoginWithCredecialsToState);
   }
 
-  @override
-  Stream<LoginState> mapEventToState(
-    LoginEvent event,
-  ) async* {
-    if (event is EmailChanged) {
-      yield* _mapEmailChangedToState(event.email);
-    }
-    if (event is PasswordChanged) {
-      yield* _mapPasswordChangedToState(event.password);
-    }
-    if (event is LoginWithGooglePressed) {
-      yield* _mapLoginWithGooglePressedToState();
-    }
-    if (event is LoginWithCredentialsPressed) {
-      yield* _mapLoginWithCredecialsToState(event.email, event.password);
-    }
+  void _onEmailChangedToState(EmailChanged event, Emitter<LoginState> emit) {
+    emit(state.update(isEmailValid: Validators.isValidadEmail(event.email)));
   }
 
-  Stream<LoginState> _mapEmailChangedToState(String email) async* {
-    yield state.update(isEmailValid: Validators.isValidadEmail(email));
+  void _onPasswordChangedToState(
+      PasswordChanged event, Emitter<LoginState> emit) {
+    emit(state.update(
+        isPasswordValid: Validators.isValidPassword(event.password)));
   }
 
-  Stream<LoginState> _mapPasswordChangedToState(String password) async* {
-    yield state.update(isPasswordValid: Validators.isValidPassword(password));
-  }
-
-  Stream<LoginState> _mapLoginWithGooglePressedToState() async* {
+  Future<void> _onLoginWithGooglePressedToState(
+      LoginWithGooglePressed event, Emitter<LoginState> emit) async {
     try {
       await _userRepository.loginWithGoogle();
-      yield LoginState.success();
+      emit(LoginState.success());
     } catch (e) {
-      yield LoginState.failureCredential();
+      emit(LoginState.failureCredential());
     }
   }
 
-  Stream<LoginState> _mapLoginWithCredecialsToState(
-      String email, String password) async* {
-    yield LoginState.loading();
+  Future<void> _onLoginWithCredecialsToState(
+      LoginWithCredentialsPressed event, Emitter<LoginState> emit) async {
+    emit(LoginState.loading());
     try {
       await _userRepository.loginWithEmailAndPassword(
-          email: email, password: password);
-      yield LoginState.success();
+          email: event.email, password: event.password);
+      emit(LoginState.success());
     } on Exception catch (e) {
       if (e.toString().contains('The user may have been deleted'))
-        yield LoginState.failureUser();
+        emit(LoginState.failureUser());
       if (e.toString().contains(
           'The password is invalid or the user does not have a password.'))
-        yield LoginState.failureCredential();
+        emit(LoginState.failureCredential());
     }
   }
 }

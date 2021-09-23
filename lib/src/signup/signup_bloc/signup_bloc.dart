@@ -1,10 +1,7 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pills/respository/authentication/authentication_repository.dart';
 import 'package:pills/src/utils/validatos.dart';
-import 'package:rxdart/rxdart.dart';
 
 part 'signup_event.dart';
 part 'signup_state.dart';
@@ -14,85 +11,49 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
 
   SignupBloc({required AuthenticationRepository userRepository})
       : _userRepository = userRepository,
-        super(SignupState.empty());
-
-  @override
-  Stream<Transition<SignupEvent, SignupState>> transformEvents(
-      Stream<SignupEvent> events, transitionFn) {
-    final nonDebounceStream = events.where((event) => (event is! NameChanged &&
-        event is! LastNameChanged &&
-        event is! ChangedEmail &&
-        event is! ChangedPassword));
-
-    final debounceStream = events
-        .where((event) => (event is NameChanged ||
-            event is LastNameChanged ||
-            event is ChangedEmail ||
-            event is ChangedPassword))
-        .debounceTime(Duration(milliseconds: 300));
-
-    return super.transformEvents(
-        nonDebounceStream.mergeWith([debounceStream]), transitionFn);
+        super(SignupState.empty()) {
+    on<NameChanged>(_onNameChangedToState);
+    on<LastNameChanged>(_onLastNameChangedToState);
+    on<ChangedEmail>(_onChangedEmailToState);
+    on<ChangedPassword>(_onChangedPasswordToState);
+    on<SubmittingForm>(_onSubmitingFormToState);
   }
 
-  @override
-  Stream<SignupState> mapEventToState(
-    SignupEvent event,
-  ) async* {
-    if (event is NameChanged) {
-      yield* _mapNameChangedToState(event.name);
-    }
-    if (event is LastNameChanged) {
-      yield* _mapLastNameChangedToState(event.lastName);
-    }
-    if (event is ChangedEmail) {
-      yield* _mapChangedEmailToState(event.emailRegister);
-    }
-    if (event is ChangedPassword) {
-      yield* _mapChangedPasswordToStae(event.passwordRegister);
-    }
-    if (event is SubmittingForm) {
-      yield* _mapSubmitingFormToState(
-        event.name,
-        event.lastName,
-        event.emailRegister,
-        event.passwordRegister,
-      );
-    }
+  void _onNameChangedToState(NameChanged event, Emitter<SignupState> emit) {
+    emit(state.update(isNameValid: Validators.isValidNames(event.name)));
   }
 
-  Stream<SignupState> _mapNameChangedToState(String name) async* {
-    yield state.update(isNameValid: Validators.isValidNames(name));
+  void _onLastNameChangedToState(
+      LastNameChanged event, Emitter<SignupState> emit) {
+    emit(
+        state.update(isLastNameValid: Validators.isValidNames(event.lastName)));
   }
 
-  Stream<SignupState> _mapLastNameChangedToState(String lastName) async* {
-    yield state.update(isLastNameValid: Validators.isValidNames(lastName));
+  void _onChangedEmailToState(ChangedEmail event, Emitter<SignupState> emit) {
+    emit(state.update(
+        isEmailVal: Validators.isValidadEmail(event.emailRegister)));
   }
 
-  Stream<SignupState> _mapChangedEmailToState(String emailRegister) async* {
-    yield state.update(isEmailVal: Validators.isValidadEmail(emailRegister));
+  void _onChangedPasswordToState(
+      ChangedPassword event, Emitter<SignupState> emit) {
+    emit(state.update(
+        isPassValid: Validators.isValidPassword(event.passwordRegister)));
   }
 
-  Stream<SignupState> _mapChangedPasswordToStae(
-      String passwordRegister) async* {
-    yield state.update(
-        isPassValid: Validators.isValidPassword(passwordRegister));
-  }
-
-  Stream<SignupState> _mapSubmitingFormToState(
-      String name, String lastName, String email, String password) async* {
+  Future<void> _onSubmitingFormToState(
+      SubmittingForm event, Emitter<SignupState> emit) async {
     try {
       await _userRepository.singUpWithEmailAndPassword(
-        name: name,
-        lastName: lastName,
-        email: email,
-        password: password,
+        name: event.name,
+        lastName: event.lastName,
+        email: event.emailRegister,
+        password: event.passwordRegister,
       );
-      yield SignupState.loading();
-      yield SignupState.success();
+      emit(SignupState.loading());
+      emit(SignupState.success());
     } catch (e) {
       print(e);
-      yield SignupState.failure();
+      emit(SignupState.failure());
     }
   }
 }
