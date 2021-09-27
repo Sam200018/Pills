@@ -84,7 +84,7 @@ class _AppViewState extends State<AppView> {
             SignUpPage(userRepository: widget.authenticationRepository),
         '/medicineDeatils': (context) {
           return MedicineDetailsPage();
-        }
+        },
       },
     );
   }

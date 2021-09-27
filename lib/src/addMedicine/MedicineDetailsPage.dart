@@ -157,8 +157,9 @@ class AmountAbleInput extends StatelessWidget {
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
             labelText: 'Cantidad disponible',
-            errorText:
-                (state.isAmountAbleValid) ? 'Ingrese una cantidad valid' : null,
+            errorText: (!state.isAmountAbleValid)
+                ? 'Ingrese una cantidad valida'
+                : null,
           ),
           onChanged: (amountAble) {
             amountAbleMedicine.disponible = double.parse(amountAble);
@@ -238,7 +239,7 @@ class _DateInputState extends State<DateInput> {
     DateTime? picked = await showDatePicker(
         context: context,
         initialDate: widget.passedDateTime,
-        firstDate: widget.passedDateTime,
+        firstDate: DateTime.now(),
         lastDate: DateTime(DateTime.now().year + 3));
 
     if (picked != null) {

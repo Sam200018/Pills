@@ -24,7 +24,6 @@ class _HousePageState extends State<HousePage> {
       body: Center(
         child: Column(
           children: [
-            Text('House page en construccion'),
             _CreateHomeButton(
               houseFirebase: MedicineFirebase(),
             ),
