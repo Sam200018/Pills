@@ -26,6 +26,28 @@ class MedicineFirebase {
     }
   }
 
+  Future<void> joinHouse(String id) async {
+    try {
+      await _firestore.collection('houses').doc(id).get().then((value) => {
+            if (value.exists)
+              {
+                _firestore.collection('houses').doc(id).update({
+                  'members': [user?.uid]
+                })
+              }
+            else
+              {throw Error()}
+          });
+
+      await _firestore
+          .collection('users')
+          .doc(user?.uid)
+          .update({'isInTheHouse': true, 'house': id});
+    } on cloud_firestore.FirebaseException catch (e) {
+      throw e;
+    }
+  }
+
   Stream<List<Medicine>> medicines() async* {
     String userHouse;
     userHouse =
