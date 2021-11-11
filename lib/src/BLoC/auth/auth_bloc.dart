@@ -20,24 +20,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthenticationState> {
     on<AuthenticationLogoutRequested>(_onAuthenticationLogOut);
   }
 
-  // @override
-  // Stream<AuthenticationState> mapEventToState(
-  //   AuthEvent event,
-  // ) async* {
-  //   if (event is AuthenticationUserChanged) {
-  //     yield _mapAuthenticationUserChangedToState(event);
-  //   } else if (event is AuthenticationLogoutRequested) {
-  //     unawaited(_authenticationRepository.logOut());
-  //   }
-  // // }
-
-  // AuthenticationState _mapAuthenticationUserChangedToState(
-  //     AuthenticationUserChanged event) {
-  //   return event.user != User.empty
-  //       ? AuthenticationState.authenticated(event.user)
-  //       : const AuthenticationState.unathenticated();
-  // }
-
   void _onAuthenticationUserChangedToState(
       AuthenticationUserChanged event, Emitter<AuthenticationState> emit) {
     event.user != User.empty
