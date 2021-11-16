@@ -7,8 +7,13 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool ligthMode =
+        MediaQuery.of(context).platformBrightness == Brightness.light;
+
     return Scaffold(
-      body: Center(),
+      body: Center(
+          // child: ligthMode? Image.asset(name):Image.asset(name),
+          ),
     );
   }
 }
