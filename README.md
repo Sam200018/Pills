@@ -23,11 +23,11 @@ Then you have a house you can add new medicines to it and all the members house 
 
 This app will have a side menu with all the setting and information that you need to organize the better way your medicines and kits in your house
 
-###Technologies
+### Technologies
 
 We use Flutter...
 
-###Challenges
+### Challenges
 
 The begginig ...
 
@@ -45,7 +45,7 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-##Credits
+## Credits
  - Samuel Bautista ()
  - Brandon 
  - Emmanuel
