@@ -6,7 +6,7 @@ This proyect is because... when my parents need a medicine always tell **me** to
 
 Sometimes you got medicines in your house, and you don't remember waht its use or those are experied. This app help you to organice your medicines and try to oriented how to use the things that you don't need because it could help other people (for me, obviously, to learn Flutter and **publlish my firt app** )
 
-#### Things what we learn
+#### Things what we have learned
 
 - State Managment 
 - Flutter Bloc package
