@@ -22,3 +22,5 @@ class MedicinesLoaded extends MedicineState {
 }
 
 class MedicinesNotLoaded extends MedicineState {}
+
+class MedicineDeleted extends MedicineState {}
