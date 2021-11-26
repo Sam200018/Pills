@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pills/respository/medicine/medicine_repository.dart';
-import 'package:pills/src/utils/UtilsWidgets.dart';
-import 'package:pills/src/utils/utilsColors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+
+import 'package:pills/respository/medicine/medicine_repository.dart';
+import 'package:pills/src/home/home_bloc/home_bloc.dart';
+import 'package:pills/src/utils/utilsColors.dart';
 
 class HousePage extends StatefulWidget {
   @override
@@ -12,28 +14,59 @@ class HousePage extends StatefulWidget {
 class _HousePageState extends State<HousePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Pills',
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
-      endDrawer: Drawer(
-        child: ListSide(),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            _CreateHomeButton(
-              houseFirebase: MedicineFirebase(),
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        if (state is HomeInitial) {
+          return Scaffold(
+            body: Center(
+              child: Text("Cargando"),
             ),
-            _InjoyToHouseButton(
-              houseFirebase: MedicineFirebase(),
-            )
-          ],
-        ),
-      ),
+          );
+        }
+        if (state is InHouseState) {
+          return Scaffold(
+            body: Center(
+              child: Text("En casa"),
+            ),
+          );
+        }
+        if (state is NotHouseState) {
+          return Scaffold(
+            body: Center(
+              child: Text("No casa"),
+            ),
+          );
+        } else {
+          return Scaffold(
+            body: Center(
+              child: Text("No se que pedo"),
+            ),
+          );
+        }
+        // return Scaffold(
+        //   appBar: AppBar(
+        //     title: Text(
+        //       'Pills',
+        //       style: TextStyle(color: Colors.black),
+        //     ),
+        //   ),
+        //   endDrawer: Drawer(
+        //     child: ListSide(),
+        //   ),
+        //   body: Center(
+        //     child: Column(
+        //       children: [
+        //         _CreateHomeButton(
+        //           houseFirebase: MedicineFirebase(),
+        //         ),
+        //         _InjoyToHouseButton(
+        //           houseFirebase: MedicineFirebase(),
+        //         )
+        //       ],
+        //     ),
+        //   ),
+        // );
+      },
     );
   }
 }

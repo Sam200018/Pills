@@ -1,34 +1,36 @@
-import 'dart:html';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:pills/shared_preferences/shared_preferences.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
+  final prefs = new SharedPreferencesUser();
+
   HomeBloc() : super(HomeInitial()) {
-    on<HomeEvent>((event, emit) {
-      on<HouseChecked>(_onHouseCheckedToState);
-      on<LeftHouse>(_onLeftHouseToState);
-      on<CreatedHouse>(_onCreatedHouseToState);
-      on<JoinedHose>(_onJoinedHouseToState);
-    });
+    on<HouseChecked>(_onHouseCheckedToState);
+    on<LeftHouse>(_onLeftHouseToState);
+    on<CreatedHouse>(_onCreatedHouseToState);
+    on<JoinedHose>(_onJoinedHouseToState);
   }
 
   void _onHouseCheckedToState(HouseChecked event, Emitter<HomeState> emit) {
+    // print("Si lo hace");
+    // emit(InHouseState());
     try {
-      // Preguntamos a SharedPreferences su house:String  es null o si existe
-      // true=> preguntamos a firestore/Api si house es null
-      // True=>
-      emit(NotHouseState());
+      //   // Preguntamos a SharedPreferences su house:String  es null o si existe
+      if (prefs.houseId == '') {
+        //     // true=> preguntamos a firestore/Api si house es null
+        //     // True=>
+        emit(NotHouseState());
 
-      // else=>
-      // escribimos en SharedPreference el house:String
-      emit(InHouseState());
-      //else=>
-      emit(InHouseState());
+        //     // else=>
+        //     // escribimos en SharedPreference el house:String
+        //     // emit(InHouseState());
+      } else {
+        emit(InHouseState());
+      }
     } catch (e) {
       emit(ErrorHouseState());
     }
