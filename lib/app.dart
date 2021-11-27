@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:pills/respository/authentication/authentication_repository.dart';
-import 'package:pills/respository/medicine/medicine_repository.dart';
+import 'package:pills/respository/repository.dart';
 import 'package:pills/src/BLoC/auth/auth_bloc.dart';
 import 'package:pills/src/addMedicine/AddMedicineBloc/addmedicine_bloc.dart';
 import 'package:pills/src/addMedicine/MedicineDetailsPage.dart';
@@ -70,8 +69,7 @@ class _AppViewState extends State<AppView> {
             builder: (context, state) {
               switch (state.status) {
                 case AuthenticationStatus.authenticated:
-                  return HomePage(
-                      userRepository: widget.authenticationRepository);
+                  return HomePage();
 
                 case AuthenticationStatus.unauthenticated:
                   return LoginPage();
