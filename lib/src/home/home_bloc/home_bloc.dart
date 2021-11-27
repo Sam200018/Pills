@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:pills/respository/repository.dart';
 import 'package:pills/shared_preferences/shared_preferences.dart';
 
 part 'home_event.dart';
@@ -7,6 +8,7 @@ part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final prefs = new SharedPreferencesUser();
+  final medicineHouse = MedicineFirebase();
 
   HomeBloc() : super(HomeInitial()) {
     on<HouseChecked>(_onHouseCheckedToState);
@@ -15,23 +17,26 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<JoinedHose>(_onJoinedHouseToState);
   }
 
-  void _onHouseCheckedToState(HouseChecked event, Emitter<HomeState> emit) {
-    // print("Si lo hace");
-    // emit(InHouseState());
+  void _onHouseCheckedToState(
+      HouseChecked event, Emitter<HomeState> emit) async {
     try {
-      //   // Preguntamos a SharedPreferences su house:String  es null o si existe
+      // Preguntamos a SharedPreferences su house:String  es null o si existe
       if (prefs.houseId == '') {
-        //     // true=> preguntamos a firestore/Api si house es null
-        //     // True=>
-        emit(NotHouseState());
-
-        //     // else=>
-        //     // escribimos en SharedPreference el house:String
-        //     // emit(InHouseState());
+        // true=> preguntamos a firestore/Api si house es null
+        String? houseID = await medicineHouse.houseID();
+        if (houseID == null) {
+          //      // True=>
+          emit(NotHouseState());
+        } else {
+          // escribimos en SharedPreference el house:String
+          prefs.houseId = houseID;
+          emit(InHouseState());
+        }
       } else {
         emit(InHouseState());
       }
     } catch (e) {
+      print(e);
       emit(ErrorHouseState());
     }
   }

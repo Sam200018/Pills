@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pills/respository/medicine/model/medicine.dart';
-import 'package:pills/src/addMedicine/MedicineDetailsPage.dart';
 
-import 'package:pills/src/utils/utilsColors.dart';
+import 'package:pills/respository/repository.dart';
+import 'package:pills/src/addMedicine/MedicineDetailsPage.dart';
+import 'package:pills/src/utils/utils.dart';
 
 class MedicineCard extends StatelessWidget {
   final Medicine _medicine;

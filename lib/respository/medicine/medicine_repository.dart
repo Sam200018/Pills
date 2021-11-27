@@ -74,14 +74,19 @@ class MedicineFirebase {
   }
 
   Future<void> deleteMedicine(Medicine medicine) async {
-    String? userHouse =
-        await _firestore.collection('users').doc(user?.uid).get().then((value) {
-      return value.get('house');
-    });
+    String? userHouse = await houseID();
 
     return _firestore
         .collection('houses/$userHouse/drugs')
         .doc(medicine.id)
         .delete();
+  }
+
+  Future<String?> houseID() async {
+    return _firestore
+        .collection("users")
+        .doc(user?.uid)
+        .get()
+        .then((value) => value.get('house'));
   }
 }

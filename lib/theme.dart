@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pills/src/utils/utilsColors.dart';
+
+import 'package:pills/src/utils/utils.dart';
 
 final theme = ThemeData(
   textTheme: GoogleFonts.latoTextTheme(),
