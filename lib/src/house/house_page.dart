@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pills/respository/medicine/medicine_repository.dart';
-import 'package:pills/src/utils/UtilsWidgets.dart';
-import 'package:pills/src/utils/utilsColors.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:pills/src/utils/utils.dart';
 
-class HousePage extends StatefulWidget {
-  @override
-  _HousePageState createState() => _HousePageState();
-}
+class HousePage extends StatelessWidget {
+  const HousePage({Key? key}) : super(key: key);
 
-class _HousePageState extends State<HousePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,14 +19,7 @@ class _HousePageState extends State<HousePage> {
       ),
       body: Center(
         child: Column(
-          children: [
-            _CreateHomeButton(
-              houseFirebase: MedicineFirebase(),
-            ),
-            _InjoyToHouseButton(
-              houseFirebase: MedicineFirebase(),
-            )
-          ],
+          children: [_CreateHomeButton(), _InjoyToHouseButton()],
         ),
       ),
     );
@@ -39,17 +27,16 @@ class _HousePageState extends State<HousePage> {
 }
 
 class _CreateHomeButton extends StatelessWidget {
-  final MedicineFirebase _houseFirebase;
+  const _CreateHomeButton({
+    Key? key,
+  }) : super(key: key);
 
-  const _CreateHomeButton({Key? key, required MedicineFirebase houseFirebase})
-      : _houseFirebase = houseFirebase,
-        super(key: key);
   @override
   Widget build(BuildContext context) {
     return TextButton(
       style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(bottonGreen())),
-      onPressed: () => _houseFirebase.createHouse(),
+      onPressed: () => null,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -68,11 +55,10 @@ class _CreateHomeButton extends StatelessWidget {
 }
 
 class _InjoyToHouseButton extends StatelessWidget {
-  final MedicineFirebase _houseFirebase;
+  const _InjoyToHouseButton({
+    Key? key,
+  }) : super(key: key);
 
-  const _InjoyToHouseButton({Key? key, required MedicineFirebase houseFirebase})
-      : _houseFirebase = houseFirebase,
-        super(key: key);
   @override
   Widget build(BuildContext context) {
     return TextButton(

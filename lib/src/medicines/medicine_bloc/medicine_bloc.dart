@@ -11,51 +11,51 @@ class MedicineBloc extends Bloc<MedicineEvent, MedicineState> {
   final MedicineFirebase _medicinesRepository;
   StreamSubscription? _medicinesSubscription;
 
-  MedicineBloc(this._medicinesRepository) : super(MedicineInitial());
-
-  @override
-  Stream<MedicineState> mapEventToState(
-    MedicineEvent event,
-  ) async* {
-    if (event is LoadMedicines) {
-      yield* _mapLoadMedicinesToState();
-    } else if (event is AddMedicine) {
-      yield* _mapAddMedicineToState(event);
-    } else if (event is UpdateMedicine) {
-      yield* _mapUpdateMedicineToState(event);
-    } else if (event is DeleteMedicine) {
-      yield* _mapDeleteMedicineToState(event);
-    } else if (event is MedicinesUpdated) {
-      yield* _mapMedicinesUpdateToState(event);
-    }
+  MedicineBloc(this._medicinesRepository) : super(MedicineInitial()) {
+    on<LoadMedicines>(_onLoadMedicinesToState);
+    on<DeleteMedicine>(_onDeleteMedicineToState);
   }
 
-  Stream<MedicineState> _mapLoadMedicinesToState() async* {
+  // @override
+  // Stream<MedicineState> mapEventToState(
+  //   MedicineEvent event,
+  // ) async* {
+  //   if (event is LoadMedicines) {
+  //     yield* _mapLoadMedicinesToState();
+  //   } else if (event is AddMedicine) {
+  //     yield* _mapAddMedicineToState(event);
+  //   } else if (event is UpdateMedicine) {
+  //     yield* _mapUpdateMedicineToState(event);
+  //   } else if (event is DeleteMedicine) {
+  //     yield* _mapDeleteMedicineToState(event);
+  //   } else if (event is MedicinesUpdated) {
+  //     yield* _mapMedicinesUpdateToState(event);
+  //   }
+  // }
+
+  void _onLoadMedicinesToState(
+      LoadMedicines event, Emitter<MedicineState> emit) {
     _medicinesSubscription?.cancel();
     try {
       _medicinesSubscription = _medicinesRepository
           .medicines()
           .listen((medicines) => add(MedicinesUpdated(medicines)));
+      emit(MedicinesLoaded());
     } catch (e) {
-      yield MedicinesNotLoaded();
+      emit(MedicinesNotLoaded());
     }
   }
 
-  Stream<MedicineState> _mapAddMedicineToState(AddMedicine event) async* {
-    _medicinesRepository.addNewMedicine(event.medicine);
-  }
-
-  Stream<MedicineState> _mapUpdateMedicineToState(
-      UpdateMedicine event) async* {}
-
-  Stream<MedicineState> _mapDeleteMedicineToState(DeleteMedicine event) async* {
+  void _onDeleteMedicineToState(
+      DeleteMedicine event, Emitter<MedicineState> emit) {
     _medicinesRepository.deleteMedicine(event.medicine);
+    emit(MedicineDeleted());
   }
 
-  Stream<MedicineState> _mapMedicinesUpdateToState(
-      MedicinesUpdated event) async* {
-    yield MedicinesLoaded(event.medicines);
-  }
+  // Stream<MedicineState> _mapMedicinesUpdateToState(
+  //     MedicinesUpdated event) async* {
+  //   yield MedicinesLoaded(event.medicines);
+  // }
 
   @override
   Future<void> close() {
