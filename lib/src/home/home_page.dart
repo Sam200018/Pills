@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:pills/src/house/house_page.dart';
+import 'package:pills/src/home/home_page_select.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({
@@ -9,6 +9,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HousePage();
+    return HomePageSelection();
   }
 }
