@@ -33,8 +33,10 @@ class _HomePageSelectionState extends State<HomePageSelection> {
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           if (state is InHouseState) {
-            BlocProvider.of<MedicineBloc>(context).add(LoadMedicines());
-            return MedicinePage();
+            return BlocProvider<MedicineBloc>(
+              create: (_) => MedicineBloc()..add(LoadMedicines()),
+              child: MedicinePage(),
+            );
           }
           if (state is NotHouseState) {
             return HousePage();

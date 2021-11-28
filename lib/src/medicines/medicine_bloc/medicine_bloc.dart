@@ -8,30 +8,14 @@ part 'medicine_event.dart';
 part 'medicine_state.dart';
 
 class MedicineBloc extends Bloc<MedicineEvent, MedicineState> {
-  final MedicineFirebase _medicinesRepository;
+  final MedicineFirebase _medicinesRepository = MedicineFirebase();
   StreamSubscription? _medicinesSubscription;
 
-  MedicineBloc(this._medicinesRepository) : super(MedicineInitial()) {
+  MedicineBloc() : super(MedicineInitial()) {
     on<LoadMedicines>(_onLoadMedicinesToState);
     on<DeleteMedicine>(_onDeleteMedicineToState);
+    on<MedicinesUpdated>(_onMedicinesUpdated);
   }
-
-  // @override
-  // Stream<MedicineState> mapEventToState(
-  //   MedicineEvent event,
-  // ) async* {
-  //   if (event is LoadMedicines) {
-  //     yield* _mapLoadMedicinesToState();
-  //   } else if (event is AddMedicine) {
-  //     yield* _mapAddMedicineToState(event);
-  //   } else if (event is UpdateMedicine) {
-  //     yield* _mapUpdateMedicineToState(event);
-  //   } else if (event is DeleteMedicine) {
-  //     yield* _mapDeleteMedicineToState(event);
-  //   } else if (event is MedicinesUpdated) {
-  //     yield* _mapMedicinesUpdateToState(event);
-  //   }
-  // }
 
   void _onLoadMedicinesToState(
       LoadMedicines event, Emitter<MedicineState> emit) {
@@ -40,7 +24,7 @@ class MedicineBloc extends Bloc<MedicineEvent, MedicineState> {
       _medicinesSubscription = _medicinesRepository
           .medicines()
           .listen((medicines) => add(MedicinesUpdated(medicines)));
-      emit(MedicinesLoaded());
+      // emit(MedicinesLoaded());
     } catch (e) {
       emit(MedicinesNotLoaded());
     }
@@ -52,10 +36,10 @@ class MedicineBloc extends Bloc<MedicineEvent, MedicineState> {
     emit(MedicineDeleted());
   }
 
-  // Stream<MedicineState> _mapMedicinesUpdateToState(
-  //     MedicinesUpdated event) async* {
-  //   yield MedicinesLoaded(event.medicines);
-  // }
+  void _onMedicinesUpdated(
+      MedicinesUpdated event, Emitter<MedicineState> emit) {
+    emit(MedicinesLoaded(event.medicines));
+  }
 
   @override
   Future<void> close() {
