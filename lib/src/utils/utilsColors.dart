@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 Color general() => Color.fromRGBO(57, 54, 157, 1.0);
 
-Color buttonText() => Color.fromRGBO(232, 95, 99, 1.0);
+Color buttonText() => Color.fromRGBO(247, 136, 18, 1.0);
 
 Color bottonGreen() => Color.fromRGBO(80, 217, 84, 1.0);
 

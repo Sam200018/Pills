@@ -8,6 +8,7 @@ import 'package:pills/src/addMedicine/MedicineDetailsPage.dart';
 import 'package:pills/src/home/home_bloc/home_bloc.dart';
 import 'package:pills/src/home/home_page.dart';
 import 'package:pills/src/login/login_page.dart';
+import 'package:pills/src/optionsLogin/loginOption_page.dart';
 import 'package:pills/src/screens/splash_page.dart';
 import 'package:pills/src/signup/SignUp_Page.dart';
 import 'package:pills/theme.dart';
@@ -72,7 +73,7 @@ class _AppViewState extends State<AppView> {
                   return HomePage();
 
                 case AuthenticationStatus.unauthenticated:
-                  return LoginPage();
+                  return LoginOptionsPage();
 
                 default:
                   return SplashScreen();
