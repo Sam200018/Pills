@@ -81,7 +81,8 @@ class _AppViewState extends State<AppView> {
             },
           );
         },
-        'signup': (context) =>
+        '/login': (context) => LoginPage(),
+        '/signup': (context) =>
             SignUpPage(userRepository: widget.authenticationRepository),
         '/medicineDeatils': (context) {
           return MedicineDetailsPage();

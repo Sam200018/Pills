@@ -78,7 +78,6 @@ class _InjoyToHouseButton extends StatelessWidget {
         ],
       ),
       onPressed: () async {
-        // TODO: Probar este codigo con la implementacion del generador de QR code
         String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
             '#526AFA', 'Cancelar scanner', false, ScanMode.QR);
         print(barcodeScanRes);

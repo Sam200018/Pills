@@ -189,7 +189,7 @@ class _SignUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: () => Navigator.of(context).pushNamed('signup'),
+        onPressed: () => Navigator.of(context).pushNamed('/signup'),
         child: Text('Crear cuenta'));
   }
 }
