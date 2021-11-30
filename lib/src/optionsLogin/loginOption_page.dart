@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pills/src/BLoC/auth/auth_bloc.dart';
 import 'package:pills/src/login/login_bloc/login_bloc.dart';
 import 'package:pills/src/utils/utils.dart';
 
@@ -26,15 +25,6 @@ class LoginOptionsPage extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class LogoPills extends StatelessWidget {
-  const LogoPills({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Image.asset('assets/logo_pillsx1.png');
   }
 }
 
@@ -91,23 +81,18 @@ class EmailAccessButton extends StatelessWidget {
       width: 250,
       height: 50,
       child: ElevatedButton(
-        onPressed: () => Navigator.pushNamed(context, '/login'),
-        style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.all(0),
-          primary: buttonText(),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+          onPressed: () => Navigator.pushNamed(context, '/login'),
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.all(0),
+            primary: buttonText(),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
           ),
-        ),
-        child: Text(
-          "Acceso con email",
-          style: TextStyle(
-            fontSize: 20.0,
-            color: Colors.black,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
+          child: CustomText(
+            textC: 'Acceso con email',
+            size: 20.0,
+          )),
     );
   }
 }
@@ -118,14 +103,11 @@ class NewAccountButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: () => Navigator.pushNamed(context, '/signup'),
-        child: Text(
-          'Crear Cuenta',
-          style: TextStyle(
-            color: Colors.black,
-            decoration: TextDecoration.underline,
-            fontSize: 20.0,
-          ),
-        ));
+      onPressed: () => Navigator.pushNamed(context, '/signup'),
+      child: CustomTextUnderline(
+        textC: 'Crear Cuenta',
+        size: 20.0,
+      ),
+    );
   }
 }

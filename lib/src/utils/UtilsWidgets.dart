@@ -17,3 +17,49 @@ class ListSide extends StatelessWidget {
     );
   }
 }
+
+class LogoPills extends StatelessWidget {
+  const LogoPills({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset('assets/logo_pillsx1.png');
+  }
+}
+
+class CustomText extends StatelessWidget {
+  final String textC;
+  final double size;
+
+  const CustomText({required this.textC, required this.size});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      textC,
+      style: TextStyle(
+        color: Colors.black,
+        fontSize: size,
+      ),
+    );
+  }
+}
+
+class CustomTextUnderline extends StatelessWidget {
+  final String textC;
+  final double size;
+
+  const CustomTextUnderline({required this.textC, required this.size});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      textC,
+      style: TextStyle(
+        color: Colors.black,
+        decoration: TextDecoration.underline,
+        fontSize: size,
+      ),
+    );
+  }
+}

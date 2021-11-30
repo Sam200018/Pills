@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:pills/src/login/login_bloc/login_bloc.dart';
+import 'package:pills/src/utils/utils.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -70,22 +71,21 @@ class _LoginFormState extends State<LoginForm> {
         }
       },
       child: Align(
+        heightFactor: 1.0,
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Text('Image'),
+              LogoPills(),
               SizedBox(height: 16.0),
               _EmailInput(_emailController),
               SizedBox(height: 16.0),
               _PasswordInput(_passwordController),
-              SizedBox(height: 16.0),
+              SizedBox(height: 58.0),
               _LoginButton(
                 _passwordController,
                 _emailController,
               ),
-              SizedBox(height: 16.0),
-              _LoginWithGoogleButton(),
-              SizedBox(height: 40.0),
+              SizedBox(height: 60.0),
               _SignUpButton()
             ],
           ),
@@ -103,15 +103,18 @@ class _EmailInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LoginBloc, LoginState>(
       builder: (context, state) {
-        return TextFormField(
-          autocorrect: false,
-          decoration: InputDecoration(
-              labelText: 'email',
-              errorText: !state.isEmailValid ? 'email invalido' : null),
-          controller: email,
-          keyboardType: TextInputType.emailAddress,
-          onChanged: (email) => BlocProvider.of<LoginBloc>(context)
-              .add(EmailChanged(email: email)),
+        return Container(
+          width: 285.0,
+          child: TextFormField(
+            autocorrect: false,
+            decoration: InputDecoration(
+                labelText: 'email',
+                errorText: !state.isEmailValid ? 'email invalido' : null),
+            controller: email,
+            keyboardType: TextInputType.emailAddress,
+            onChanged: (email) => BlocProvider.of<LoginBloc>(context)
+                .add(EmailChanged(email: email)),
+          ),
         );
       },
     );
@@ -127,14 +130,17 @@ class _PasswordInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LoginBloc, LoginState>(
       builder: (context, state) {
-        return TextFormField(
-          controller: password,
-          obscureText: true,
-          decoration: InputDecoration(
-              labelText: 'password',
-              errorText: !state.isPasswordValid ? 'password invalida' : null),
-          onChanged: (password) => BlocProvider.of<LoginBloc>(context)
-              .add(PasswordChanged(password: password)),
+        return Container(
+          width: 285.0,
+          child: TextFormField(
+            controller: password,
+            obscureText: true,
+            decoration: InputDecoration(
+                labelText: 'password',
+                errorText: !state.isPasswordValid ? 'password invalida' : null),
+            onChanged: (password) => BlocProvider.of<LoginBloc>(context)
+                .add(PasswordChanged(password: password)),
+          ),
         );
       },
     );
@@ -156,31 +162,26 @@ class _LoginButton extends StatelessWidget {
       builder: (context, state) {
         return state.isSubmitting
             ? Center(child: CircularProgressIndicator())
-            : ElevatedButton(
-                onPressed: isLoginButtonEnable(state)
-                    ? () => BlocProvider.of<LoginBloc>(context).add(
-                        LoginWithCredentialsPressed(
-                            email: email.text, password: password.text))
-                    : null,
-                child: Text('Ingresar'));
+            : Container(
+                width: 285.0,
+                height: 50.0,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: buttonText(),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10))),
+                  onPressed: isLoginButtonEnable(state)
+                      ? () => BlocProvider.of<LoginBloc>(context).add(
+                          LoginWithCredentialsPressed(
+                              email: email.text, password: password.text))
+                      : null,
+                  child: CustomText(
+                    textC: 'Iniciar Sesion',
+                    size: 20.0,
+                  ),
+                ),
+              );
       },
-    );
-  }
-}
-
-class _LoginWithGoogleButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 200.0,
-      child: ElevatedButton(
-        onPressed: () =>
-            BlocProvider.of<LoginBloc>(context).add(LoginWithGooglePressed()),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [Icon(Icons.android), Text('Login con google')],
-        ),
-      ),
     );
   }
 }
@@ -189,7 +190,11 @@ class _SignUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: () => Navigator.of(context).pushNamed('/signup'),
-        child: Text('Crear cuenta'));
+      onPressed: () => Navigator.of(context).pushNamed('/signup'),
+      child: CustomTextUnderline(
+        textC: 'Crear Cuenta',
+        size: 20.0,
+      ),
+    );
   }
 }
