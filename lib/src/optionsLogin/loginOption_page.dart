@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pills/src/login/login_bloc/login_bloc.dart';
@@ -33,41 +32,45 @@ class GoogleAccessButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 250.0,
-      height: 50.0,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.all(0),
-            primary: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            )),
-        onPressed: () {
-          BlocProvider.of<LoginBloc>(context).add(LoginWithGooglePressed());
-        },
-        child: Row(
-          children: [
-            SizedBox(
-              width: 5.0,
+    return BlocBuilder<LoginBloc, LoginState>(
+      builder: (context, state) {
+        return Container(
+          width: 250.0,
+          height: 50.0,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.all(0),
+                primary: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                )),
+            onPressed: () {
+              BlocProvider.of<LoginBloc>(context).add(LoginWithGooglePressed());
+            },
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 5.0,
+                ),
+                Image.asset(
+                  'assets/logoGoogle.png',
+                ),
+                SizedBox(
+                  width: 12.0,
+                ),
+                Text(
+                  "Acceso con Google",
+                  style: TextStyle(
+                      color: Color.fromRGBO(0, 0, 0, .54),
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Roboto Mono'),
+                )
+              ],
             ),
-            Image.asset(
-              'assets/logoGoogle.png',
-            ),
-            SizedBox(
-              width: 12.0,
-            ),
-            Text(
-              "Acceso con Google",
-              style: TextStyle(
-                  color: Color.fromRGBO(0, 0, 0, .54),
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: 'Roboto Mono'),
-            )
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

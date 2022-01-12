@@ -30,8 +30,8 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   }
 
   void _onChangedEmailToState(ChangedEmail event, Emitter<SignupState> emit) {
-    emit(state.update(
-        isEmailVal: Validators.isValidadEmail(event.emailRegister)));
+    emit(
+        state.update(isEmailVal: Validators.isValidEmail(event.emailRegister)));
   }
 
   void _onChangedPasswordToState(

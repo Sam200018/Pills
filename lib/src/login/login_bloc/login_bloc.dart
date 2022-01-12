@@ -19,7 +19,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   void _onEmailChangedToState(EmailChanged event, Emitter<LoginState> emit) {
-    emit(state.update(isEmailValid: Validators.isValidadEmail(event.email)));
+    emit(state.update(isEmailValid: Validators.isValidEmail(event.email)));
   }
 
   void _onPasswordChangedToState(

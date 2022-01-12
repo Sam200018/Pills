@@ -7,6 +7,7 @@ import 'package:pills/src/addMedicine/AddMedicineBloc/addmedicine_bloc.dart';
 import 'package:pills/src/addMedicine/MedicineDetailsPage.dart';
 import 'package:pills/src/home/home_bloc/home_bloc.dart';
 import 'package:pills/src/home/home_page.dart';
+import 'package:pills/src/login/login_bloc/login_bloc.dart';
 import 'package:pills/src/login/login_page.dart';
 import 'package:pills/src/optionsLogin/loginOption_page.dart';
 import 'package:pills/src/screens/splash_page.dart';
@@ -33,7 +34,9 @@ class App extends StatelessWidget {
           BlocProvider<AddmedicineBloc>(
               create: (_) =>
                   AddmedicineBloc(medicineFirebase: MedicineFirebase())),
-          BlocProvider<HomeBloc>(create: (_) => HomeBloc()..add(HouseChecked()))
+          BlocProvider<HomeBloc>(
+              create: (_) => HomeBloc()..add(HouseChecked())),
+          BlocProvider(create: (_) => LoginBloc(_authenticationRepository)),
         ],
         child: AppView(
           authenticationRepository: _authenticationRepository,
@@ -68,6 +71,7 @@ class _AppViewState extends State<AppView> {
         '/': (context) {
           return BlocBuilder<AuthBloc, AuthenticationState>(
             builder: (context, state) {
+              print(state.user);
               switch (state.status) {
                 case AuthenticationStatus.authenticated:
                   return HomePage();

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pills/respository/repository.dart';
 import 'package:pills/src/login/login_page.dart';
 import 'package:pills/src/signup/signup_bloc/signup_bloc.dart';
+import 'package:pills/src/utils/utils.dart';
 
 class SignupForm extends StatefulWidget {
   final AuthenticationRepository _userRepository;
@@ -68,10 +69,11 @@ class _SignupFormState extends State<SignupForm> {
         }
       },
       child: Align(
+        heightFactor: 1.0,
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Text('Imagen'),
+              LogoPillsForm(),
               SizedBox(height: 16.0),
               _NameInput(name: _nameController),
               SizedBox(height: 16.0),
@@ -80,14 +82,14 @@ class _SignupFormState extends State<SignupForm> {
               _EmailInput(email: _emailContrl),
               SizedBox(height: 16.0),
               _InputPassword(password: _passwordContrl),
-              SizedBox(height: 16.0),
+              SizedBox(height: 63.0),
               _SignUpWithCredentialsButton(
                 name: _nameController,
                 lastName: _lastNameController,
                 email: _emailContrl,
                 password: _passwordContrl,
               ),
-              SizedBox(height: 40.0),
+              SizedBox(height: 60.0),
               _LoginPageButton(
                 userRepository: _userRepository,
               )
@@ -108,15 +110,18 @@ class _NameInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SignupBloc, SignupState>(
       builder: (context, state) {
-        return TextFormField(
-          autocorrect: false,
-          decoration: InputDecoration(
-              labelText: 'Nombre',
-              errorText: !state.isNameValid ? 'formato incorrecto' : null),
-          controller: name,
-          keyboardType: TextInputType.name,
-          onChanged: (name) =>
-              BlocProvider.of<SignupBloc>(context).add(NameChanged(name: name)),
+        return Container(
+          width: 285.0,
+          child: TextFormField(
+            autocorrect: false,
+            decoration: InputDecoration(
+                labelText: 'Nombre',
+                errorText: !state.isNameValid ? 'formato incorrecto' : null),
+            controller: name,
+            keyboardType: TextInputType.name,
+            onChanged: (name) => BlocProvider.of<SignupBloc>(context)
+                .add(NameChanged(name: name)),
+          ),
         );
       },
     );
@@ -132,15 +137,19 @@ class _LastNameInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SignupBloc, SignupState>(
       builder: (context, state) {
-        return TextField(
-          autocorrect: false,
-          decoration: InputDecoration(
-              labelText: 'Apellido',
-              errorText: !state.isLastNameValid ? 'formato incorrecto' : null),
-          controller: lastName,
-          keyboardType: TextInputType.name,
-          onChanged: (lastName) => BlocProvider.of<SignupBloc>(context)
-              .add(LastNameChanged(lastName: lastName)),
+        return Container(
+          width: 285.0,
+          child: TextFormField(
+            autocorrect: false,
+            decoration: InputDecoration(
+                labelText: 'Apellido',
+                errorText:
+                    !state.isLastNameValid ? 'formato incorrecto' : null),
+            controller: lastName,
+            keyboardType: TextInputType.name,
+            onChanged: (lastName) => BlocProvider.of<SignupBloc>(context)
+                .add(LastNameChanged(lastName: lastName)),
+          ),
         );
       },
     );
@@ -156,15 +165,18 @@ class _EmailInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SignupBloc, SignupState>(
       builder: (context, state) {
-        return TextFormField(
-          autocorrect: false,
-          decoration: InputDecoration(
-              labelText: 'Correo electronico',
-              errorText: !state.isEmailVal ? 'email no valido' : null),
-          controller: email,
-          keyboardType: TextInputType.emailAddress,
-          onChanged: (email) => BlocProvider.of<SignupBloc>(context)
-              .add(ChangedEmail(emailRegister: email)),
+        return Container(
+          width: 285.0,
+          child: TextFormField(
+            autocorrect: false,
+            decoration: InputDecoration(
+                labelText: 'Correo electronico',
+                errorText: !state.isEmailVal ? 'email no valido' : null),
+            controller: email,
+            keyboardType: TextInputType.emailAddress,
+            onChanged: (email) => BlocProvider.of<SignupBloc>(context)
+                .add(ChangedEmail(emailRegister: email)),
+          ),
         );
       },
     );
@@ -180,15 +192,18 @@ class _InputPassword extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SignupBloc, SignupState>(
       builder: (context, state) {
-        return TextFormField(
-          autocorrect: false,
-          obscureText: true,
-          decoration: InputDecoration(
-              labelText: 'Contraseña',
-              errorText: !state.isPassValid ? 'contraseña invalida' : null),
-          controller: password,
-          onChanged: (password) => BlocProvider.of<SignupBloc>(context)
-              .add(ChangedPassword(passwordRegister: password)),
+        return Container(
+          width: 285.0,
+          child: TextFormField(
+            autocorrect: false,
+            obscureText: true,
+            decoration: InputDecoration(
+                labelText: 'Contraseña',
+                errorText: !state.isPassValid ? 'contraseña invalida' : null),
+            controller: password,
+            onChanged: (password) => BlocProvider.of<SignupBloc>(context)
+                .add(ChangedPassword(passwordRegister: password)),
+          ),
         );
       },
     );
@@ -220,17 +235,31 @@ class _SignUpWithCredentialsButton extends StatelessWidget {
       builder: (context, state) {
         return (state.isSubmitting)
             ? Center(child: CircularProgressIndicator())
-            : ElevatedButton(
-                onPressed: isSignupButtonEnable(state)
-                    ? () {
-                        BlocProvider.of<SignupBloc>(context).add(SubmittingForm(
-                            name: name.text,
-                            lastName: lastName.text,
-                            emailRegister: email.text,
-                            passwordRegister: password.text));
-                      }
-                    : null,
-                child: Text('Crear Cuenta'),
+            : Container(
+                width: 285.0,
+                height: 50.0,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: buttonText(),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  onPressed: isSignupButtonEnable(state)
+                      ? () {
+                          BlocProvider.of<SignupBloc>(context).add(
+                              SubmittingForm(
+                                  name: name.text,
+                                  lastName: lastName.text,
+                                  emailRegister: email.text,
+                                  passwordRegister: password.text));
+                        }
+                      : null,
+                  child: CustomText(
+                    textC: 'Crear Cuenta',
+                    size: 20.0,
+                  ),
+                ),
               );
       },
     );
@@ -248,7 +277,10 @@ class _LoginPageButton extends StatelessWidget {
       onPressed: () => Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => LoginPage()),
           (route) => false),
-      child: Text('Ya tengo cuenta'),
+      child: CustomTextUnderline(
+        textC: 'Ya tengo cuenta',
+        size: 20.0,
+      ),
     );
   }
 }

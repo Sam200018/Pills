@@ -7,12 +7,17 @@ class Validators {
 
   static final RegExp _namesRegExp = RegExp(r"^([A-Z][a-zA-Z]*)");
 
-  static isValidadEmail(String email) {
+  static isValidEmail(String email) {
     return _emailRegExp.hasMatch(email);
   }
 
   static isValidPassword(String password) {
+    password.contains(password);
     return _passwordRegExp.hasMatch(password);
+  }
+
+  static isVerifiedPassword(String orignalPassword, String verifyPassword) {
+    return verifyPassword.contains(orignalPassword);
   }
 
   static isValidNames(String name) => _namesRegExp.hasMatch(name);

@@ -27,6 +27,15 @@ class LogoPills extends StatelessWidget {
   }
 }
 
+class LogoPillsForm extends StatelessWidget {
+  const LogoPillsForm({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset('assets/LogoPillsForm.png');
+  }
+}
+
 class CustomText extends StatelessWidget {
   final String textC;
   final double size;
