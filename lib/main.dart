@@ -1,21 +1,30 @@
-import 'package:equatable/equatable.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:pills/app.dart';
-import 'package:pills/respository/repository.dart';
-import 'package:pills/shared_preferences/shared_preferences.dart';
+import 'package:get/get.dart';
+import 'package:pills/routes.dart';
+import 'package:pills/src/Auth/AuthController.dart';
 
-main() async {
-  WidgetsFlutterBinding
-      .ensureInitialized(); //*para  interactuar con el motor de Flutter
-  await Firebase.initializeApp(); //*llamar al condigo nativo de plataforma
-  EquatableConfig.stringify = kDebugMode;
-  final authenticationRepository = AuthenticationRepository();
-  await authenticationRepository.user.first;
-  final prefs = new SharedPreferencesUser();
-  await prefs.initPrefs();
-  runApp(App(
-    authenticationRepository: authenticationRepository,
-  ));
+import 'package:pills/theme.dart';
+
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp().then((value) {
+    Get.put(AuthController());
+  });
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Pills',
+      theme: theme,
+      home: const Center(
+        child: CircularProgressIndicator(),
+      ),
+      getPages: AppPages.routes,
+    );
+  }
 }
