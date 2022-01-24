@@ -17,7 +17,7 @@ class AuthController extends GetxController {
     if (user != null) {
       Get.offAllNamed('/home');
     } else {
-      Get.offAllNamed('/login');
+      Get.offAllNamed('/loginOptions');
     }
   }
 

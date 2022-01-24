@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:pills/src/home/home_page.dart';
 import 'package:pills/src/login/controller/login_controller.dart';
 import 'package:pills/src/login/login_page.dart';
+import 'package:pills/src/screens/splash_page.dart';
 import 'package:pills/src/signup/SignUp_Page.dart';
 
 class AppPages {
@@ -10,6 +11,11 @@ class AppPages {
     GetPage(
       name: '/home',
       page: () => HomePage(),
+    ),
+    GetPage(
+      name: '/loginOptions',
+      page: () => SplashScreen(),
+      binding: LoginBinding(),
     ),
     GetPage(
       name: '/login',
