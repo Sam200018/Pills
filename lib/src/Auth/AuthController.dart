@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:pills/respository/authentication/authentication_repository.dart';
 
 class AuthController extends GetxController {
   FirebaseAuth _auth = FirebaseAuth.instance;
+  final AuthenticationRepository _repository = AuthenticationRepository();
   late Rx<User?> firebaseUser;
 
   @override
@@ -24,12 +26,7 @@ class AuthController extends GetxController {
   //*cerrar sesion
   Future<void> logOut() async {
     try {
-      await _auth.signOut();
-
-      // await Future.wait([
-      //   _auth.signOut(),
-      //   _googleSignIn.signIn(),
-      // ]);
+      await _repository.logOut();
     } catch (e) {}
   }
 }
