@@ -58,9 +58,7 @@ class AuthenticationRepository {
         'house': null
       });
     } on firebase_auth.FirebaseAuthException catch (e) {
-      e.code.contains('email-already-in-use')
-          ? throw SignUpFailure(message: e.toString())
-          : throw SignUpFailure(message: e.toString());
+      throw e;
     }
     logOut();
   }
@@ -111,13 +109,19 @@ class AuthenticationRepository {
 
   //*cerrar sesion
   Future<void> logOut() async {
-    try {
-      await Future.wait([
-        _firebaseAuth.signOut(),
-        _googleSignIn.signIn(),
-      ]);
-    } on Exception {
-      throw LogOutFailure();
+    var googleConected = await _googleSignIn.isSignedIn();
+    if (googleConected) {
+      try {
+        await _googleSignIn.signOut();
+      } on Exception {
+        throw LogOutFailure();
+      }
+    } else {
+      try {
+        await _firebaseAuth.signOut();
+      } on Exception {
+        throw LogOutFailure();
+      }
     }
   }
 
