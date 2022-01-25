@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pills/respository/repository.dart';
 
+import 'package:pills/respository/repository.dart';
 import 'package:pills/src/utils/utils.dart';
 
 class LoginBinding implements Bindings {
@@ -35,7 +35,7 @@ class LoginController extends GetxController {
 
   String? emailValidation(String? s) {
     if (!GetUtils.isEmail(s!)) {
-      return "Ingrese un email no valido";
+      return "Ingrese un email valido";
     } else {
       return null;
     }
