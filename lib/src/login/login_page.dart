@@ -22,19 +22,12 @@ class LoginPage extends GetView<LoginController> {
                 SizedBox(height: 16.0),
                 _LoginButton(),
                 SizedBox(height: 40.0),
-                _SignUpButton(),
+                _SignUpPageButton(),
               ],
             ),
           ),
         ),
       ),
-      // body: BlocProvider<LoginBloc>(
-      //   create: (context) =>
-      //       LoginBloc(context.read<AuthenticationRepository>()),
-      //   child: SafeArea(
-      //     child: LoginForm(),
-      //   ),
-      // ),
     );
   }
 }
@@ -46,7 +39,7 @@ class _EmailInput extends GetWidget<LoginController> {
     return TextFormField(
       autocorrect: false,
       decoration: InputDecoration(
-        labelText: 'email',
+        labelText: 'Email',
       ),
       controller: controller.emailCtrl,
       keyboardType: TextInputType.emailAddress,
@@ -68,7 +61,7 @@ class _PasswordInput extends GetWidget<LoginController> {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: controller.passwordValidation,
         decoration: InputDecoration(
-          labelText: 'password',
+          labelText: 'Password',
           suffixIcon: IconButton(
             onPressed: controller.showPassword,
             icon: (!controller.isPasswordVisible.value)
@@ -92,28 +85,8 @@ class _LoginButton extends GetWidget<LoginController> {
   }
 }
 
-///Este widget esta comentado porque falta hacerle su metodo OnPressed en el controlador
-///y asi se accede mediante cuentas de google
-
-// class _LoginWithGoogleButton extends GetWidget<LoginController> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       width: 200.0,
-//       child: ElevatedButton(
-//         onPressed: () =>
-//             BlocProvider.of<LoginBloc>(context).add(LoginWithGooglePressed()),
-//         child: Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceAround,
-//           children: [Icon(Icons.android), Text('Login con google')],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-class _SignUpButton extends GetWidget<LoginController> {
-  const _SignUpButton({Key? key}) : super(key: key);
+class _SignUpPageButton extends GetWidget<LoginController> {
+  const _SignUpPageButton({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return TextButton(
