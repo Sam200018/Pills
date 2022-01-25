@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pills/respository/repository.dart';
 
@@ -52,8 +52,13 @@ class LoginController extends GetxController {
         await repository.loginWithEmailAndPassword(
             email: emailCtrl.text, password: passwordCtrl.text);
       } catch (e) {
-        Get.snackbar('Error', e.toString(),
-            snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar(
+          'Error',
+          e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          duration: Duration(seconds: 7),
+        );
       }
     } else {
       Get.defaultDialog(
@@ -62,6 +67,20 @@ class LoginController extends GetxController {
             'Verifica que los campos hayan sido llenandos correctamente',
         textConfirm: 'Aceptar',
         onConfirm: () => Get.back(),
+      );
+    }
+  }
+
+  Future<void> loginWithGoogle() async {
+    try {
+      await repository.loginWithGoogle();
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        duration: Duration(seconds: 7),
       );
     }
   }
