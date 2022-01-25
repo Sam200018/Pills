@@ -5,6 +5,7 @@ import 'package:pills/src/login/controller/login_controller.dart';
 import 'package:pills/src/login/login_page.dart';
 import 'package:pills/src/screens/splash_page.dart';
 import 'package:pills/src/signup/SignUp_Page.dart';
+import 'package:pills/src/signup/controller/signup_controller.dart';
 
 class AppPages {
   static final routes = [
@@ -25,6 +26,7 @@ class AppPages {
     GetPage(
       name: '/signup',
       page: () => SignUpPage(),
+      binding: SignUpBinding(),
     )
   ];
 }
