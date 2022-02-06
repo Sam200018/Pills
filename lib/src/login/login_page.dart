@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:pills/src/login/controller/login_controller.dart';
+import 'package:pills/src/utils/utils.dart';
 
 class LoginPage extends GetView<LoginController> {
   const LoginPage({Key? key}) : super(key: key);
@@ -16,12 +17,14 @@ class LoginPage extends GetView<LoginController> {
             key: controller.loginFormKey,
             child: Column(
               children: const [
+                LogoPills(),
                 _EmailInput(),
                 SizedBox(height: 16.0),
                 _PasswordInput(),
-                SizedBox(height: 16.0),
+                _NewPasswordButton(),
+                SizedBox(height: 10.0),
                 _LoginButton(),
-                SizedBox(height: 40.0),
+                SizedBox(height: 60.0),
                 _SignUpPageButton(),
               ],
             ),
@@ -78,9 +81,24 @@ class _LoginButton extends GetWidget<LoginController> {
   const _LoginButton({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () => controller.login(),
-      child: Text('Iniciar Sesión'),
+    return Container(
+      width: 250,
+      height: 50,
+      child: ElevatedButton(
+        onPressed: () => controller.login(),
+        child: CustomText(
+          textC: 'Acceso con email',
+          size: 20.0,
+        ),
+        style: ElevatedButton.styleFrom(
+          elevation: 10.0,
+          padding: EdgeInsets.all(0),
+          primary: buttonText(),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -91,7 +109,25 @@ class _SignUpPageButton extends GetWidget<LoginController> {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () => Get.toNamed('/signup'),
-      child: Text('Crear cuenta'),
+      child: CustomTextUnderline(
+        textC: 'Crear Cuenta',
+        size: 20.0,
+      ),
+    );
+  }
+}
+
+class _NewPasswordButton extends StatelessWidget {
+  const _NewPasswordButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () => Get.toNamed('/newPassword'),
+      child: CustomTextUnderline(
+        textC: '¿Olvidaste tu contraseña?',
+        size: 15.0,
+      ),
     );
   }
 }
