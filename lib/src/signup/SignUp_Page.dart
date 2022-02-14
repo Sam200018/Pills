@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:pills/src/signup/controller/signup_controller.dart';
+import 'package:pills/src/utils/utils.dart';
 
 class SignUpPage extends GetView<SignUpController> {
   const SignUpPage({
@@ -18,6 +19,7 @@ class SignUpPage extends GetView<SignUpController> {
             key: controller.loginFormKey,
             child: Column(
               children: const [
+                LogoPillsForm(),
                 _NameInput(),
                 SizedBox(height: 16.0),
                 _LastNameInput(),
@@ -27,9 +29,10 @@ class SignUpPage extends GetView<SignUpController> {
                 _InputPassword(),
                 SizedBox(height: 16.0),
                 _InputConfirmPassword(),
-                SizedBox(height: 20.0),
+                SizedBox(height: 50.0),
                 _SignUpWithCredentialsButton(),
-                SizedBox(height: 40.0),
+                SizedBox(height: 60.0),
+                _LoginPageButton()
               ],
             ),
           ),
@@ -145,30 +148,38 @@ class _InputConfirmPassword extends GetView<SignUpController> {
 class _SignUpWithCredentialsButton extends GetView<SignUpController> {
   const _SignUpWithCredentialsButton({Key? key}) : super(key: key);
 
-  // bool isSignupButtonEnable(SignupState state) =>
-  //     state.isFormValid && isPopulatedForm && !state.isSubmitting;
-
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () => controller.signUp(),
-      child: Text('Crear Cuenta'),
+    return Container(
+      width: 250,
+      height: 50,
+      child: ElevatedButton(
+        onPressed: () => controller.signUp(),
+        child: CustomText(
+          textC: 'Crear Cuenta',
+          size: 20.0,
+        ),
+        style: ElevatedButton.styleFrom(
+            elevation: 10.0,
+            padding: EdgeInsets.all(0),
+            primary: buttonText(),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10))),
+      ),
     );
   }
 }
 
-// class _LoginPageButton extends GetView<SignUpController> {
-//   final AuthenticationRepository userRepository;
-
-//   const _LoginPageButton({Key? key, required this.userRepository})
-//       : super(key: key);
-//   @override
-//   Widget build(BuildContext context) {
-//     return TextButton(
-//       onPressed: () => Navigator.of(context).pushAndRemoveUntil(
-//           MaterialPageRoute(builder: (context) => LoginPage()),
-//           (route) => false),
-//       child: Text('Ya tengo cuenta'),
-//     );
-//   }
-// }
+class _LoginPageButton extends GetView<SignUpController> {
+  const _LoginPageButton({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () => Get.toNamed('/login'),
+      child: CustomTextUnderline(
+        size: 20.0,
+        textC: 'Ya tengo cuenta',
+      ),
+    );
+  }
+}
