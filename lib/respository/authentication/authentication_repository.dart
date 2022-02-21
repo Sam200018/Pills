@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:cloud_firestore/cloud_firestore.dart' as cloud_firestore;
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'models/user.dart';
@@ -129,6 +131,14 @@ class AuthenticationRepository {
     final user = _firebaseAuth.currentUser;
 
     return _firestore.collection('users').doc(user?.uid).snapshots();
+  }
+
+  Future<void> sendEmailToChangePassword({required String email}) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      throw e;
+    }
   }
 }
 

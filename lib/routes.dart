@@ -7,6 +7,7 @@ import 'package:pills/src/newPassword/new_password_page.dart';
 import 'package:pills/src/screens/splash_page.dart';
 import 'package:pills/src/signup/SignUp_Page.dart';
 import 'package:pills/src/signup/controller/signup_controller.dart';
+import 'src/newPassword/controller/newPassword_controller.dart';
 
 class AppPages {
   static final routes = [
@@ -32,6 +33,7 @@ class AppPages {
     GetPage(
       name: '/newPassword',
       page: () => NewPasswordPage(),
+      binding: NewPasswordBinding(),
     )
   ];
 }

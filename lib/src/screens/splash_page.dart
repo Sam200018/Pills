@@ -15,18 +15,20 @@ class SplashScreen extends StatelessWidget {
     //     MediaQuery.of(context).platformBrightness == Brightness.light;
 
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            SizedBox(height: 100),
-            LogoPills(),
-            SizedBox(height: 20.0),
-            GoogleAccessButton(),
-            SizedBox(height: 15.0),
-            EmailAccessButton(),
-            SizedBox(height: 90.0),
-            NewAccountButton(),
-          ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(height: 100),
+              LogoPills(),
+              SizedBox(height: 20.0),
+              GoogleAccessButton(),
+              SizedBox(height: 15.0),
+              EmailAccessButton(),
+              SizedBox(height: 90.0),
+              NewAccountButton(),
+            ],
+          ),
         ),
       ),
     );

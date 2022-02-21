@@ -14,7 +14,7 @@ class SignUpBinding implements Bindings {
 
 class SignUpController extends GetxController {
   final AuthenticationRepository repository = AuthenticationRepository();
-  final loginFormKey = GlobalKey<FormState>();
+  final signupFormKey = GlobalKey<FormState>();
   final nameCtrl = TextEditingController();
   final lastNameCtrl = TextEditingController();
   final emailCtrl = TextEditingController();
@@ -36,7 +36,7 @@ class SignUpController extends GetxController {
 
   String? passwordValidation(String? s) {
     if (!Validators.isValidPassword(s!)) {
-      return "Imhrese una contrasena valida";
+      return "Ingrese una contrasena valida";
     }
   }
 
@@ -73,7 +73,7 @@ class SignUpController extends GetxController {
   }
 
   Future<void> signUp() async {
-    if (loginFormKey.currentState!.validate()) {
+    if (signupFormKey.currentState!.validate()) {
       try {
         Get.defaultDialog(
           title: 'Cargando...',

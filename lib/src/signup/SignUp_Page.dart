@@ -16,7 +16,7 @@ class SignUpPage extends GetView<SignUpController> {
         child: SingleChildScrollView(
           padding: const EdgeInsetsDirectional.all(20.0),
           child: Form(
-            key: controller.loginFormKey,
+            key: controller.signupFormKey,
             child: Column(
               children: const [
                 LogoPillsForm(),
