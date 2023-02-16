@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "533266879870",
+    "project_id": "pills-stg",
+    "storage_bucket": "pills-stg.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533266879870:android:56c394ea38f42def210f2f",
+        "android_client_info": {
+          "package_name": "com.samuelbautista.pills.stg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "533266879870-rm4os5orgqkc060afbid08ape8l02agc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo25GtwLaFJqiAVXagLU-_-sOvLwzXHGI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "533266879870-rcf2vokv1rca2up50jrpbrnm1qvc8mhv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "533266879870-1gvqjspev9hjbh8nin1p12m3kpr8rgjf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pills"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533266879870:android:57fa8c0374bcae54210f2f",
+        "android_client_info": {
+          "package_name": "com.samuelbautista.pills.stg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "533266879870-rm4os5orgqkc060afbid08ape8l02agc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo25GtwLaFJqiAVXagLU-_-sOvLwzXHGI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "533266879870-rcf2vokv1rca2up50jrpbrnm1qvc8mhv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "533266879870-1gvqjspev9hjbh8nin1p12m3kpr8rgjf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pills"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
