@@ -15,11 +15,13 @@ import 'package:pills/src/signup/SignUp_Page.dart';
 import 'package:pills/theme.dart';
 
 class App extends StatelessWidget {
+  final AuthenticationRepository _authenticationRepository;
+  final String flavor;
+
   const App(
-      {Key? key, required AuthenticationRepository authenticationRepository})
+      {Key? key, required AuthenticationRepository authenticationRepository, required this.flavor})
       : _authenticationRepository = authenticationRepository;
 
-  final AuthenticationRepository _authenticationRepository;
 
   @override
   Widget build(BuildContext context) {

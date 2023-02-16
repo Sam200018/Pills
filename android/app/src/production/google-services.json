@@ -8,20 +8,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:860409466297:android:53ea2185ec9b0af763fa68",
+        "mobilesdk_app_id": "1:860409466297:android:0bb9dace6170321e63fa68",
         "android_client_info": {
           "package_name": "com.samuelbautista.pills"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "860409466297-agmv7tvdgm3h5v5k22vnd825f7m0s65m.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.samuelbautista.pills",
-            "certificate_hash": "d85251babb4d8e7528337a4c05726d75ce409eb7"
-          }
-        },
         {
           "client_id": "860409466297-fg990bngou1nmjveknf67otj2a37a52e.apps.googleusercontent.com",
           "client_type": 3
@@ -38,6 +30,13 @@
             {
               "client_id": "860409466297-fg990bngou1nmjveknf67otj2a37a52e.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "860409466297-5misnfchft1k0ciessc6ecudbbh1toke.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.medicinas"
+              }
             }
           ]
         }
