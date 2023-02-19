@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pills/repositories/repository.dart';
+import 'package:pills/di/bloc_register.dart';
 import 'package:pills/src/login/login_bloc/login_bloc.dart';
 import 'package:pills/src/login/LoginForm.dart';
 
@@ -11,8 +11,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider<LoginBloc>(
-        create: (context) =>
-            LoginBloc(context.read<AuthenticationRepository>()),
+        create: (context) => locator.get<LoginBloc>(),
         child: SafeArea(
           child: LoginForm(),
         ),

@@ -16,8 +16,8 @@ main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   ); //*llamar al condigo nativo de plataforma
   EquatableConfig.stringify = kDebugMode;
-  setupBlocs();
   setupRepositories();
+  setupBlocs();
   final prefs = new SharedPreferencesUser();
   await prefs.initPrefs();
   runApp(
