@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pills/repositories/repository.dart';
-import 'package:pills/src/signup/SignupForm.dart';
-import '../../domain/blocs/signup/signup_bloc.dart';
+import '../../../domain/blocs/signup/signup_bloc.dart';
+import 'SignupForm.dart';
+
 
 class SignUpPage extends StatelessWidget {
   final AuthenticationRepository _userRepository;

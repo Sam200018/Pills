@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:pills/src/utils/utils.dart';
+import '../../utils/UtilsWidgets.dart';
+import '../../utils/utilsColors.dart';
+
 
 class HousePage extends StatelessWidget {
   const HousePage({Key? key}) : super(key: key);

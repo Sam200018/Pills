@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pills/src/house/house_page.dart';
-import 'package:pills/src/medicines/MedicinePage.dart';
-import '../../domain/blocs/home/home_bloc.dart';
-import '../../domain/blocs/medicines/medicine_bloc.dart';
+import '../../../domain/blocs/home/home_bloc.dart';
+import '../../../domain/blocs/medicines/medicine_bloc.dart';
+import '../house/house_page.dart';
+import '../medicines/MedicinePage.dart';
+
 
 class HomePageSelection extends StatefulWidget {
   @override

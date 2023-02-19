@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pills/routeConstants.dart';
-import 'package:pills/src/utils/utils.dart';
-import '../../domain/blocs/login/login_bloc.dart';
+import '../../../domain/blocs/login/login_bloc.dart';
+import '../../utils/UtilsWidgets.dart';
+import '../../utils/utilsColors.dart';
+
 
 class LoginOptionsPage extends StatelessWidget {
   const LoginOptionsPage({Key? key}) : super(key: key);

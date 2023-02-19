@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pills/repositories/repository.dart';
 import 'package:pills/routes.dart';
-import 'package:pills/theme.dart';
+import 'package:pills/ui/themes/light_theme.dart';
 import 'di/bloc_register.dart';
 import 'domain/blocs/add_medicine/addmedicine_bloc.dart';
 import 'domain/blocs/auth/auth_bloc.dart';

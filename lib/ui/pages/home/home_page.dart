@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'home_page_select.dart';
 
-import 'package:pills/src/home/home_page_select.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({

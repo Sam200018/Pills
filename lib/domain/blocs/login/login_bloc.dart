@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:pills/src/utils/validatos.dart';
+import 'package:pills/domain/utils/validators.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pills/repositories/authentication/authentication_repository.dart';
 

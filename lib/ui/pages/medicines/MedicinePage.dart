@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pills/repositories/medicine/model/medicine.dart';
-import 'package:pills/src/medicines/Medicines.dart';
+import 'package:pills/ui/pages/medicines/Medicines.dart';
+import '../../utils/UtilsWidgets.dart';
+import '../../utils/utilsColors.dart';
 
-import 'package:pills/src/utils/UtilsWidgets.dart';
-import 'package:pills/src/utils/utilsColors.dart';
 
 class MedicinePage extends StatelessWidget {
   @override
