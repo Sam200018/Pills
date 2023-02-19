@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pills/repositories/authentication/authentication_repository.dart';
+import 'package:pills/data/authentication/authentication_repository.dart';
 import 'package:pills/domain/utils/validators.dart';
 
 part 'signup_event.dart';

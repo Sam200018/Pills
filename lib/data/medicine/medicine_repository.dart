@@ -1,8 +1,7 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart' as cloud_firestore;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:pills/repositories/medicine/model/medicine.dart';
+import 'package:pills/data/medicine/model/medicine.dart';
 
 class MedicineFirebase {
   final cloud_firestore.FirebaseFirestore _firestore;

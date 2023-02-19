@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:pills/domain/utils/validators.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pills/repositories/authentication/authentication_repository.dart';
+import 'package:pills/data/authentication/authentication_repository.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';

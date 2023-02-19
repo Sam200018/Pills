@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pills/repositories/medicine/model/medicine.dart';
+import 'package:pills/data/medicine/model/medicine.dart';
 import 'package:pills/ui/widgets/MedicineCard.dart';
 import '../../../domain/blocs/medicines/medicine_bloc.dart';
 

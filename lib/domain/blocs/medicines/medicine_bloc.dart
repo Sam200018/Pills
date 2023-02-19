@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pills/repositories/medicine/medicine_repository.dart';
-import 'package:pills/repositories/medicine/model/medicine.dart';
+import 'package:pills/data/medicine/medicine_repository.dart';
+import 'package:pills/data/medicine/model/medicine.dart';
 part 'medicine_event.dart';
 part 'medicine_state.dart';
 

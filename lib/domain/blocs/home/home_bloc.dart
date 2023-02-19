@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pills/repositories/repository.dart';
+import 'package:pills/data/repository.dart';
 import 'package:pills/shared_preferences/shared_preferences.dart';
 
 part 'home_event.dart';
