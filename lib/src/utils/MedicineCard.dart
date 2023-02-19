@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:pills/respository/repository.dart';
+import 'package:pills/repositories//repository.dart';
 import 'package:pills/src/addMedicine/MedicineDetailsPage.dart';
 import 'package:pills/src/utils/utils.dart';
 

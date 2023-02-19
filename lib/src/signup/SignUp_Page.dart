@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:pills/respository/repository.dart';
+import 'package:pills/repositories/repository.dart';
 import 'package:pills/src/signup/SignupForm.dart';
 import 'package:pills/src/signup/signup_bloc/signup_bloc.dart';
 

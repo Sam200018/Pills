@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:pills/src/utils/validatos.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pills/respository/authentication/authentication_repository.dart';
+import 'package:pills/repositories/authentication/authentication_repository.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final AuthenticationRepository _userRepository;
+  final AuthenticationRepository _authenticationRepository;
 
-  LoginBloc(this._userRepository) : super(LoginState.empty()) {
+  LoginBloc(this._authenticationRepository) : super(LoginState.empty()) {
     on<EmailChanged>(_onEmailChangedToState);
     on<PasswordChanged>(_onPasswordChangedToState);
     on<LoginWithGooglePressed>(_onLoginWithGooglePressedToState);
@@ -31,7 +31,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Future<void> _onLoginWithGooglePressedToState(
       LoginWithGooglePressed event, Emitter<LoginState> emit) async {
     try {
-      await _userRepository.loginWithGoogle();
+      await _authenticationRepository.loginWithGoogle();
       emit(LoginState.success());
     } catch (e) {
       emit(LoginState.failureCredential());
@@ -42,7 +42,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       LoginWithCredentialsPressed event, Emitter<LoginState> emit) async {
     emit(LoginState.loading());
     try {
-      await _userRepository.loginWithEmailAndPassword(
+      await _authenticationRepository.loginWithEmailAndPassword(
           email: event.email, password: event.password);
       emit(LoginState.success());
     } on Exception catch (e) {

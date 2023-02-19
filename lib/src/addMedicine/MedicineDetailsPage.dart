@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:pills/respository/repository.dart';
+import 'package:pills/repositories/repository.dart';
 import 'AddMedicineBloc/addmedicine_bloc.dart';
 
 class MedicineDetailsPage extends StatefulWidget {

@@ -1,19 +1,19 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:pills/repositories/repository.dart';
 
-import 'package:pills/respository/repository.dart';
 
 part 'auth_event.dart';
+
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthenticationState> {
   final AuthenticationRepository _authenticationRepository;
   StreamSubscription<User>? _userSubscription;
 
-  AuthBloc({required AuthenticationRepository authenticationRepository})
-      : _authenticationRepository = authenticationRepository,
-        super(const AuthenticationState.unknown()) {
+  AuthBloc(this._authenticationRepository)
+      : super(const AuthenticationState.unknown()) {
     _userSubscription = _authenticationRepository.user
         .listen((user) => add(AuthenticationUserChanged(user)));
     on<AuthenticationUserChanged>(_onAuthenticationUserChangedToState);

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pills/respository/medicine/model/medicine.dart';
-
+import 'package:pills/repositories/medicine/model/medicine.dart';
 import 'package:pills/src/medicines/medicine_bloc/medicine_bloc.dart';
 import 'package:pills/src/utils/MedicineCard.dart';
 
