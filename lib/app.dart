@@ -1,53 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pills/respository/repository.dart';
+import 'package:pills/repositories/repository.dart';
 import 'package:pills/routes.dart';
 import 'package:pills/src/BLoC/auth/auth_bloc.dart';
 import 'package:pills/src/addMedicine/AddMedicineBloc/addmedicine_bloc.dart';
 import 'package:pills/src/home/home_bloc/home_bloc.dart';
 import 'package:pills/src/login/login_bloc/login_bloc.dart';
 import 'package:pills/theme.dart';
+import 'di/bloc_register.dart';
 
 class App extends StatelessWidget {
-  final AuthenticationRepository _authenticationRepository;
   final String flavor;
 
-  const App(
-      {Key? key, required AuthenticationRepository authenticationRepository, required this.flavor})
-      : _authenticationRepository = authenticationRepository;
-
+  const App({Key? key, required this.flavor});
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: _authenticationRepository,
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider<AuthBloc>(
-            create: (_) =>
-                AuthBloc(authenticationRepository: _authenticationRepository),
-          ),
-          BlocProvider<AddmedicineBloc>(
-              create: (_) =>
-                  AddmedicineBloc(medicineFirebase: MedicineFirebase())),
-          BlocProvider<HomeBloc>(
-              create: (_) => HomeBloc()..add(HouseChecked())),
-          BlocProvider(create: (_) => LoginBloc(_authenticationRepository)),
-        ],
-        child: AppView(
-          authenticationRepository: _authenticationRepository,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>(
+          create: (_) => locator.get<AuthBloc>(),
         ),
-      ),
+        BlocProvider<AddmedicineBloc>(
+            create: (_) =>
+                AddmedicineBloc(medicineFirebase: MedicineFirebase())),
+        BlocProvider<HomeBloc>(create: (_) => HomeBloc()..add(HouseChecked())),
+        BlocProvider(create: (_) => locator.get<LoginBloc>()),
+      ],
+      child: AppView(),
     );
   }
 }
 
 class AppView extends StatelessWidget {
-  final AuthenticationRepository authenticationRepository;
-
-  const AppView({Key? key, required this.authenticationRepository})
-      : super(key: key);
-
+  const AppView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

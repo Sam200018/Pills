@@ -13,7 +13,7 @@ class SignUpFailure implements Exception {
 
 class LogInWithEmailAndPasswordFailure implements Exception {}
 
-class CredentialssFialure implements Exception {}
+class CredentialsFailure implements Exception {}
 
 class LogInWithGoogleFailure implements Exception {}
 
