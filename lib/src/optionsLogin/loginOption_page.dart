@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pills/routeConstants.dart';
 import 'package:pills/src/login/login_bloc/login_bloc.dart';
 import 'package:pills/src/utils/utils.dart';
 
@@ -84,7 +86,7 @@ class EmailAccessButton extends StatelessWidget {
       width: 250,
       height: 50,
       child: ElevatedButton(
-          onPressed: () => Navigator.pushNamed(context, '/login'),
+          onPressed: () => context.go(RouteConstants.login),
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.all(0),
             primary: buttonText(),
