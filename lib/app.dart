@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pills/routes.dart';
+import 'package:pills/routes/routes.dart';
 import 'package:pills/ui/themes/light_theme.dart';
 import 'data/medicine/medicine_repository.dart';
 import 'di/bloc_register.dart';
