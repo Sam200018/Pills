@@ -1,12 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pills/routeConstants.dart';
-import 'package:pills/src/BLoC/auth/auth_bloc.dart';
 import 'package:pills/src/home/home_page.dart';
 import 'package:pills/src/login/login_page.dart';
 import 'package:pills/src/optionsLogin/loginOption_page.dart';
 import 'package:pills/src/screens/splash_page.dart';
-import 'package:pills/src/signup/SignUp_Page.dart';
+import 'domain/blocs/auth/auth_bloc.dart';
+
 
 final router = GoRouter(
   initialLocation: "/",

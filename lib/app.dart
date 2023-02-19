@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pills/repositories/repository.dart';
 import 'package:pills/routes.dart';
-import 'package:pills/src/BLoC/auth/auth_bloc.dart';
-import 'package:pills/src/addMedicine/AddMedicineBloc/addmedicine_bloc.dart';
-import 'package:pills/src/home/home_bloc/home_bloc.dart';
-import 'package:pills/src/login/login_bloc/login_bloc.dart';
 import 'package:pills/theme.dart';
 import 'di/bloc_register.dart';
+import 'domain/blocs/add_medicine/addmedicine_bloc.dart';
+import 'domain/blocs/auth/auth_bloc.dart';
+import 'domain/blocs/home/home_bloc.dart';
+import 'domain/blocs/login/login_bloc.dart';
 
 class App extends StatelessWidget {
   final String flavor;

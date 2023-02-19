@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pills/repositories/repository.dart';
 import 'package:pills/src/login/login_page.dart';
-import 'package:pills/src/signup/signup_bloc/signup_bloc.dart';
 import 'package:pills/src/utils/utils.dart';
+import '../../domain/blocs/signup/signup_bloc.dart';
 
 class SignupForm extends StatefulWidget {
   final AuthenticationRepository _userRepository;

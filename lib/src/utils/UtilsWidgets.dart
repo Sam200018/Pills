@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:pills/src/BLoC/auth/auth_bloc.dart';
+import '../../domain/blocs/auth/auth_bloc.dart';
 
 class ListSide extends StatelessWidget {
   @override
