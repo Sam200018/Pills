@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../../../domain/blocs/login/login_bloc.dart';
+import '../../../routes/routes.dart';
 import '../../utils/UtilsWidgets.dart';
 import '../../utils/utilsColors.dart';
 
@@ -191,7 +193,7 @@ class _SignUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () => Navigator.of(context).pushNamed('/signup'),
+      onPressed: () => context.go(AppRouter.login+"/"+AppRouter.signup),
       child: CustomTextUnderline(
         textC: 'Crear Cuenta',
         size: 20.0,

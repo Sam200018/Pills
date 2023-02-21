@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pills/routes/routeConstants.dart';
+import 'package:pills/routes/routes.dart';
 import '../../../domain/blocs/login/login_bloc.dart';
 import '../../utils/UtilsWidgets.dart';
 import '../../utils/utilsColors.dart';
-
 
 class LoginOptionsPage extends StatelessWidget {
   const LoginOptionsPage({Key? key}) : super(key: key);
@@ -88,7 +87,7 @@ class EmailAccessButton extends StatelessWidget {
       width: 250,
       height: 50,
       child: ElevatedButton(
-          onPressed: () => context.go(RouteConstants.login),
+          onPressed: () => context.go("${AppRouter.login}/${AppRouter.loginPage}"),
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.all(0),
             primary: buttonText(),
@@ -110,7 +109,7 @@ class NewAccountButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () => Navigator.pushNamed(context, '/signup'),
+      onPressed: () => context.go("${AppRouter.login}/${AppRouter.signup}"),
       child: CustomTextUnderline(
         textC: 'Crear Cuenta',
         size: 20.0,
