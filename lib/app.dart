@@ -18,9 +18,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<AuthBloc>(
-          create: (_) => locator.get<AuthBloc>(),
-        ),
+        BlocProvider<AuthBloc>(create: (_) => locator.get<AuthBloc>()),
         BlocProvider<AddmedicineBloc>(
             create: (_) =>
                 AddmedicineBloc(medicineFirebase: MedicineFirebase())),
@@ -38,37 +36,10 @@ class AppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routerConfig: router,
+      routerConfig: AppRouter().router,
       title: 'Pills',
       debugShowCheckedModeBanner: false,
       theme: theme,
-      //
-      // initialRoute: '/',
-      // routes: {
-      //   '/': (context) {
-      //     return BlocBuilder<AuthBloc, AuthenticationState>(
-      //       builder: (context, state) {
-      //         print(state.user);
-      //         switch (state.status) {
-      //           case AuthenticationStatus.authenticated:
-      //             return HomePage();
-      //
-      //           case AuthenticationStatus.unauthenticated:
-      //             return LoginOptionsPage();
-      //
-      //           default:
-      //             return SplashScreen();
-      //         }
-      //       },
-      //     );
-      //   },
-      //   '/login': (context) => LoginPage(),
-      //   '/signup': (context) =>
-      //       SignUpPage(userRepository: authenticationRepository),
-      //   '/medicineDeatils': (context) {
-      //     return MedicineDetailsPage();
-      //   },
-      // },
     );
   }
 }
