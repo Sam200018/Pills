@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pills/data/repository.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pills/routes/routes.dart';
 import '../../../domain/blocs/signup/signup_bloc.dart';
 import '../../utils/UtilsWidgets.dart';
 import '../../utils/utilsColors.dart';
 import '../login/login_page.dart';
 
-
 class SignupForm extends StatefulWidget {
-  final AuthenticationRepository _userRepository;
-
-  const SignupForm(
-    this._userRepository, {
-    Key? key,
-  }) : super(key: key);
+  const SignupForm({Key? key}) : super(key: key);
 
   @override
   _SignupFormState createState() => _SignupFormState();
@@ -24,7 +19,6 @@ class _SignupFormState extends State<SignupForm> {
       _lastNameController = TextEditingController(),
       _emailContrl = TextEditingController(),
       _passwordContrl = TextEditingController();
-  AuthenticationRepository get _userRepository => widget._userRepository;
 
   @override
   void dispose() {
@@ -92,9 +86,7 @@ class _SignupFormState extends State<SignupForm> {
                 password: _passwordContrl,
               ),
               SizedBox(height: 60.0),
-              _LoginPageButton(
-                userRepository: _userRepository,
-              )
+              _LoginPageButton()
             ],
           ),
         ),
@@ -269,16 +261,12 @@ class _SignUpWithCredentialsButton extends StatelessWidget {
 }
 
 class _LoginPageButton extends StatelessWidget {
-  final AuthenticationRepository userRepository;
+  const _LoginPageButton({Key? key}) : super(key: key);
 
-  const _LoginPageButton({Key? key, required this.userRepository})
-      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () => Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => LoginPage()),
-          (route) => false),
+      onPressed: () => context.go(AppRouter.login+"/"+AppRouter.loginPage),
       child: CustomTextUnderline(
         textC: 'Ya tengo cuenta',
         size: 20.0,

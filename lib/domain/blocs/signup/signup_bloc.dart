@@ -4,14 +4,13 @@ import 'package:pills/data/authentication/authentication_repository.dart';
 import 'package:pills/domain/utils/validators.dart';
 
 part 'signup_event.dart';
+
 part 'signup_state.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
-  AuthenticationRepository _userRepository;
+  AuthenticationRepository _authenticationRepository;
 
-  SignupBloc({required AuthenticationRepository userRepository})
-      : _userRepository = userRepository,
-        super(SignupState.empty()) {
+  SignupBloc(this._authenticationRepository) : super(SignupState.empty()) {
     on<NameChanged>(_onNameChangedToState);
     on<LastNameChanged>(_onLastNameChangedToState);
     on<ChangedEmail>(_onChangedEmailToState);
@@ -43,7 +42,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   Future<void> _onSubmitingFormToState(
       SubmittingForm event, Emitter<SignupState> emit) async {
     try {
-      await _userRepository.singUpWithEmailAndPassword(
+      await _authenticationRepository.singUpWithEmailAndPassword(
         name: event.name,
         lastName: event.lastName,
         email: event.emailRegister,
