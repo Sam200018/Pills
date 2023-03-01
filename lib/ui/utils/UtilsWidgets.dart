@@ -9,8 +9,9 @@ class ListSide extends StatelessWidget {
       children: [
         ListTile(
           title: Text('Cerrar Sesion'),
-          onTap: () => BlocProvider.of<AuthBloc>(context)
-              .add(AuthenticationLogoutRequested()),
+          onTap: () => context
+              .read<AuthBloc>()
+              .add(AuthenticationLogoutRequested(context)),
         )
       ],
     );
@@ -22,7 +23,9 @@ class LogoPills extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset('assets/logo_pillsx1.png');
+    return Image.asset(
+      "assets/logo_pillsx1.png",
+    );
   }
 }
 
@@ -31,7 +34,7 @@ class LogoPillsForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset('assets/LogoPillsForm.png');
+    return Image.asset('assets/logo_reducido.png');
   }
 }
 
