@@ -8,6 +8,7 @@ import '../ui/pages/signup/SignUp_Page.dart';
 import '../ui/pages/splash/splash_page.dart';
 
 class AppRouter {
+
   static String home = "/";
   static String login = "/login";
   static String loginPage = "loginPage";
@@ -15,7 +16,6 @@ class AppRouter {
   static String splash = "/splash";
 
   GoRouter router = GoRouter(
-    initialLocation: login,
     routes: [
       GoRoute(
         path: home,
@@ -43,8 +43,11 @@ class AppRouter {
       ),
     ],
     redirect: (context, state) {
+      print("redirect");
+
       if (context.read<AuthBloc>().state.status ==
-          AuthenticationStatus.authenticated) {
+              AuthenticationStatus.authenticated &&
+          state.location.startsWith(login)) {
         return home;
       } else {
         return null;
