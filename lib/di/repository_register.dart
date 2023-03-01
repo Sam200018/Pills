@@ -7,12 +7,13 @@ import 'package:pills/data/authentication/authentication_repository.dart';
 final locator = GetIt.instance;
 
 void setupRepositories() {
-  locator.registerFactory<GoogleSignIn>(() => GoogleSignIn.standard());
+  locator.registerFactory<GoogleSignIn>(() => GoogleSignIn(
+        scopes: ['email', 'profile', 'openid'],
+      ));
   locator.registerFactory<FirebaseAuth>(() => FirebaseAuth.instance);
   locator.registerFactory<FirebaseFirestore>(() => FirebaseFirestore.instance);
-  locator.registerFactory<AuthenticationRepository>(() =>
-      AuthenticationRepository(
-          firebaseAuth: locator.get<FirebaseAuth>(),
-          firestore: locator.get<FirebaseFirestore>(),
-          googleSignIn: locator.get<GoogleSignIn>()));
+  locator.registerSingleton<AuthenticationRepository>(AuthenticationRepository(
+      firebaseAuth: locator.get<FirebaseAuth>(),
+      firestore: locator.get<FirebaseFirestore>(),
+      googleSignIn: locator.get<GoogleSignIn>()));
 }
