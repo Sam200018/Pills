@@ -16,4 +16,11 @@ class AuthenticationUserChanged extends AuthEvent {
   List<Object> get props => [user];
 }
 
-class AuthenticationLogoutRequested extends AuthEvent {}
+class AuthenticationLogoutRequested extends AuthEvent {
+  final BuildContext context;
+
+  AuthenticationLogoutRequested(this.context);
+
+  @override
+  List<Object> get props => [context];
+}

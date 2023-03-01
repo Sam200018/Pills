@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pills/data/repository.dart';
 
+import '../../../routes/routes.dart';
 
 part 'auth_event.dart';
 
@@ -27,10 +30,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthenticationState> {
         : emit(AuthenticationState.unathenticated());
   }
 
-  void _onAuthenticationLogOut(
-      AuthenticationLogoutRequested event, Emitter<AuthenticationState> emit) {
-    unawaited(_authenticationRepository.logOut());
-    emit(AuthenticationState.unathenticated());
+  Future<void> _onAuthenticationLogOut(AuthenticationLogoutRequested event,
+      Emitter<AuthenticationState> emit) async {
+    try {
+      await _authenticationRepository.logOut();
+      emit(AuthenticationState.unathenticated());
+      event.context.go(AppRouter.login);
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
