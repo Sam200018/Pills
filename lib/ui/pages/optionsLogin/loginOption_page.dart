@@ -48,7 +48,7 @@ class GoogleAccessButton extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 )),
             onPressed: () {
-              BlocProvider.of<LoginBloc>(context).add(LoginWithGooglePressed());
+              context.read<LoginBloc>().add(LoginWithGooglePressed(context));
             },
             child: Row(
               children: [
