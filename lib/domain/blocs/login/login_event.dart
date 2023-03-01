@@ -3,6 +3,7 @@ part of 'login_bloc.dart';
 @immutable
 abstract class LoginEvent extends Equatable {
   const LoginEvent();
+
   @override
   List<Object> get props => [];
 }
@@ -34,7 +35,14 @@ class Submitting extends LoginEvent {
   List<Object> get props => [email, password];
 }
 
-class LoginWithGooglePressed extends LoginEvent {}
+class LoginWithGooglePressed extends LoginEvent {
+  final BuildContext context;
+
+  LoginWithGooglePressed(this.context);
+
+  @override
+  List<Object> get props => [context];
+}
 
 class LoginWithCredentialsPressed extends LoginEvent {
   final String email, password;

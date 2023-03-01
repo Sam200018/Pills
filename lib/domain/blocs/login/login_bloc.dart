@@ -1,11 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meta/meta.dart';
 import 'package:pills/domain/utils/validators.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pills/data/authentication/authentication_repository.dart';
+import 'package:pills/routes/routes.dart';
 
 part 'login_event.dart';
+
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
@@ -15,7 +18,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<EmailChanged>(_onEmailChangedToState);
     on<PasswordChanged>(_onPasswordChangedToState);
     on<LoginWithGooglePressed>(_onLoginWithGooglePressedToState);
-    on<LoginWithCredentialsPressed>(_onLoginWithCredecialsToState);
+    on<LoginWithCredentialsPressed>(_onLoginWithCredentialsToState);
   }
 
   void _onEmailChangedToState(EmailChanged event, Emitter<LoginState> emit) {
@@ -32,13 +35,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       LoginWithGooglePressed event, Emitter<LoginState> emit) async {
     try {
       await _authenticationRepository.loginWithGoogle();
+      event.context.go(AppRouter.home);
       emit(LoginState.success());
     } catch (e) {
       emit(LoginState.failureCredential());
     }
   }
 
-  Future<void> _onLoginWithCredecialsToState(
+  Future<void> _onLoginWithCredentialsToState(
       LoginWithCredentialsPressed event, Emitter<LoginState> emit) async {
     emit(LoginState.loading());
     try {
