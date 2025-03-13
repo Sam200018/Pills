@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import '../../utils/UtilsWidgets.dart';
 import '../../utils/utilsColors.dart';
 
@@ -80,9 +79,7 @@ class _InjoyToHouseButton extends StatelessWidget {
         ],
       ),
       onPressed: () async {
-        String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-            '#526AFA', 'Cancelar scanner', false, ScanMode.QR);
-        print(barcodeScanRes);
+
         // _houseFirebase.joinHouse(barcodeScanRes);
       },
     );

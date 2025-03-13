@@ -234,7 +234,7 @@ class _SignUpWithCredentialsButton extends StatelessWidget {
                 height: 50.0,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: buttonText(),
+                    backgroundColor: buttonText(),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),

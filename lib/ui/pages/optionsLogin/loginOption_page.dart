@@ -42,8 +42,7 @@ class GoogleAccessButton extends StatelessWidget {
           height: 50.0,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.all(0),
-                primary: Colors.white,
+                padding: EdgeInsets.all(0), backgroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 )),
@@ -89,8 +88,7 @@ class EmailAccessButton extends StatelessWidget {
       child: ElevatedButton(
           onPressed: () => context.go("${AppRouter.login}/${AppRouter.loginPage}"),
           style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.all(0),
-            primary: buttonText(),
+            padding: EdgeInsets.all(0), backgroundColor: buttonText(),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),

@@ -2,14 +2,14 @@
   "project_info": {
     "project_number": "61270660760",
     "project_id": "pills-dev",
-    "storage_bucket": "pills-dev.appspot.com"
+    "storage_bucket": "pills-dev.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:61270660760:android:420a7145b93318a86ee2ed",
+        "mobilesdk_app_id": "1:61270660760:android:202bd9392bd8bcdd6ee2ed",
         "android_client_info": {
-          "package_name": "com.samuelbautista.pills.dev"
+          "package_name": "com.samuelbautista.pills"
         }
       },
       "oauth_client": [
