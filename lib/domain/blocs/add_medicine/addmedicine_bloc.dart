@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pills/data/medicine/medicine_repository.dart';
-import 'package:pills/data/medicine/model/medicine.dart';
-import 'package:pills/domain/utils/validators.dart';
+import 'package:pills/data/repository/medicine_repository.dart';
+import 'package:pills/data/model/medicine.dart';
+import 'package:pills/config/validators.dart';
 part 'addmedicine_event.dart';
 part 'addmedicine_state.dart';
 

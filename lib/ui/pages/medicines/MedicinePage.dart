@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pills/data/medicine/model/medicine.dart';
+import 'package:pills/data/model/medicine.dart';
 import 'package:pills/ui/pages/medicines/Medicines.dart';
 import '../../utils/UtilsWidgets.dart';
 import '../../utils/utilsColors.dart';

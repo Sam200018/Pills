@@ -6,7 +6,8 @@ import 'package:pills/app.dart';
 import 'package:pills/di/bloc_register.dart';
 import 'package:pills/di/repository_register.dart';
 import 'package:pills/shared_preferences/shared_preferences.dart';
-import 'package:pills/stg/firebase_options.dart';
+import 'config/firebase/stg/firebase_options.dart';
+
 
 main() async {
   WidgetsFlutterBinding

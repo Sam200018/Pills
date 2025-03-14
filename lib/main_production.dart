@@ -4,9 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pills/app.dart';
 import 'package:pills/shared_preferences/shared_preferences.dart';
+import 'config/firebase/prod/firebase_options.dart';
 import 'di/bloc_register.dart';
 import 'di/repository_register.dart';
-import 'prod/firebase_options.dart';
+
 
 main() async {
   WidgetsFlutterBinding
