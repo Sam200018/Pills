@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pills/ui/utils/utils.dart';
+import 'package:pills/ui/core/utils/utilsColors.dart';
 
 final theme = ThemeData(
   fontFamily: "Montserrat",

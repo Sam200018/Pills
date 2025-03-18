@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../utils/UtilsWidgets.dart';
-import '../../utils/utilsColors.dart';
+import 'package:pills/ui/core/utils/UtilsWidgets.dart';
+import 'package:pills/ui/core/utils/utilsColors.dart';
 
 
 class HousePage extends StatelessWidget {

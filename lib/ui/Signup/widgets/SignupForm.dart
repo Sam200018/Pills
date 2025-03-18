@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pills/domain/blocs/signup/signup_bloc.dart';
 import 'package:pills/routes.dart';
 import 'package:pills/ui/Login/widgets/login_page.dart';
-import 'package:pills/ui/utils/UtilsWidgets.dart';
-import 'package:pills/ui/utils/utilsColors.dart';
+import 'package:pills/ui/Signup/bloc/signup_bloc.dart';
+import 'package:pills/ui/core/utils/UtilsWidgets.dart';
+import 'package:pills/ui/core/utils/utilsColors.dart';
 
 class SignupForm extends StatefulWidget {
   const SignupForm({Key? key}) : super(key: key);

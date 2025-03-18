@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../pages/home/home_page_select.dart';
+import 'package:pills/ui/Home/widgets/home_page_select.dart';
 
 
 class HomePage extends StatelessWidget {

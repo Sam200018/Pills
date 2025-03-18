@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pills/di/bloc_register.dart';
-import 'package:pills/domain/blocs/signup/signup_bloc.dart' show SignupBloc;
-
-import '../../pages/signup/SignupForm.dart';
+import 'package:pills/ui/Signup/bloc/signup_bloc.dart';
+import 'package:pills/ui/Signup/widgets/SignupForm.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);

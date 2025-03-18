@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pills/routes.dart';
-import 'package:pills/domain/blocs/login/login_bloc.dart';
-import 'package:pills/ui/utils/UtilsWidgets.dart';
-import 'package:pills/ui/utils/utilsColors.dart';
+import 'package:pills/ui/Login/bloc/login_bloc.dart';
+import 'package:pills/ui/core/utils/UtilsWidgets.dart';
+import 'package:pills/ui/core/utils/utilsColors.dart';
 
 class LoginOptionsPage extends StatelessWidget {
   const LoginOptionsPage({Key? key}) : super(key: key);
@@ -47,7 +47,7 @@ class GoogleAccessButton extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 )),
             onPressed: () {
-              context.read<LoginBloc>().add(LoginWithGooglePressed());
+              context.read<LoginBloc>().add(LoginWithGooglePressed(context));
             },
             child: Row(
               children: [

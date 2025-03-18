@@ -1,9 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
-import 'package:pills/data/authentication/authentication_repository.dart';
 import 'package:pills/config/validators.dart';
+import 'package:pills/data/repository/authentication_repository.dart';
 
 part 'login_event.dart';
 

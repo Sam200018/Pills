@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pills/data/authentication/authentication_repository.dart';
+import 'package:flutter/material.dart';
 import 'package:pills/data/model/user.dart';
+import 'package:pills/data/repository/authentication_repository.dart';
 
 
 
