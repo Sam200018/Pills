@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pills/ui/Authentication/bloc/auth_bloc.dart';
-import 'package:pills/ui/Home/Widgets/home_page.dart';
+import 'package:pills/ui/Home/widgets/home_page.dart';
 import 'package:pills/ui/Login/widgets/login_page.dart';
 import 'package:pills/ui/Login/widgets/loginOption_page.dart';
 import 'package:pills/ui/Signup/widgets/SignUp_Page.dart';
