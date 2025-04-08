@@ -1,0 +1,30 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "pills-dev",
+          "appId": "1:61270660760:android:202bd9392bd8bcdd6ee2ed",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "pills-dev",
+          "appId": "1:61270660760:ios:16e78da825345f686ee2ed",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/dev/firebase_options.dart": {
+          "projectId": "pills-dev",
+          "configurations": {
+            "android": "1:61270660760:android:202bd9392bd8bcdd6ee2ed",
+            "ios": "1:61270660760:ios:16e78da825345f686ee2ed"
+          }
+        }
+      }
+    }
+  }
+}

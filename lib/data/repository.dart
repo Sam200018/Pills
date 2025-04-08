@@ -1,4 +1,4 @@
-export 'authentication/models/user.dart';
-export 'authentication/authentication_repository.dart';
-export 'package:pills/data/medicine/model/medicine.dart';
-export 'package:pills/data/medicine/medicine_repository.dart';
+export 'model/user.dart';
+export 'repository/authentication_repository.dart';
+export 'package:pills/data/model/medicine.dart';
+export 'package:pills/data/repository/medicine_repository.dart';
